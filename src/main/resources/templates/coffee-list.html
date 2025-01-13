@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список кофеен</title>
+</head>
+<body>
+<h1>Список кофеен</h1>
+
+<a th:href="@{/coffee-shops(new=true)}">Добавить новую кофейню</a>
+<br/><br/>
+<a th:href="@{/coffee-shops(sortByRating=desc)}">Сортировать по убыванию рейтинга</a>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Адрес</th>
+        <th>Телефон</th>
+        <th>Email</th>
+        <th>Сайт</th>
+        <th>Описание</th>
+        <th>Рейтинг</th>
+        <th>Действия</th>
+    </tr>
+    <tr th:each="coffeeShop : ${coffeeShops}">
+        <td th:text="${coffeeShop.id}"></td>
+        <td th:text="${coffeeShop.name}"></td>
+        <td th:text="${coffeeShop.address}"></td>
+        <td th:text="${coffeeShop.phone}"></td>
+        <td th:text="${coffeeShop.email}"></td>
+        <td th:text="${coffeeShop.website}"></td>
+        <td th:text="${coffeeShop.description}"></td>
+        <td th:text="${coffeeShop.rating}"></td>
+        <td>
+            <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}">Редактировать</a>
+        </td>
+    </tr>
+</table>
+
+<a href="/">На главную</a>
+</body>
+</html>

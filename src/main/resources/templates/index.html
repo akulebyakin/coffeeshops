@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Главная</title>
+</head>
+<body>
+<div th:if="${param.loginSuccess}">
+    <p style="color: green;">Добро пожаловать!</p>
+</div>
+
+<h1>Добро пожаловать на сайт кофеен</h1>
+<a href="/login">Войти</a> | <a href="/register">Регистрация</a> |
+<a href="/coffee-shops">Список кофеен</a>
+</body>
+</html>

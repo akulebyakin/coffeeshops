@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование пользователя</title>
+</head>
+<body>
+<h1>Редактирование пользователя</h1>
+
+<form th:action="@{/users/edit}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label for="name">Имя:</label>
+        <input type="text" id="name" th:field="*{name}" />
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" th:field="*{email}" />
+    </div>
+    <div>
+        <label for="login">Логин:</label>
+        <input type="text" id="login" th:field="*{login}" />
+    </div>
+    <!-- Пароль можно редактировать при необходимости -->
+    <div>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" th:field="*{password}" />
+    </div>
+    <div>
+        <label for="role">Роль:</label>
+        <select id="role" th:field="*{role}">
+            <option value="USER">USER</option>
+            <option value="ADMIN">ADMIN</option>
+        </select>
+    </div>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="/users">Назад к списку</a>
+</body>
+</html>
