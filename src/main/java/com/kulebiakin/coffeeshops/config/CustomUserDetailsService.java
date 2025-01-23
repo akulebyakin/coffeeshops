@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with login: " + login);
         }
 
-        // Преобразуем нашу сущность User в объект UserDetails
+        // Change User to UserDetails
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getLogin())
                 .password(user.getPassword())

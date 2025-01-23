@@ -22,11 +22,10 @@ public class CoffeeShopController {
         this.coffeeShopService = coffeeShopService;
     }
 
-    // Отображение списка кофеен
+    // Show list of coffee shops
     @GetMapping
-    public String listCoffeeShops(
-            @RequestParam(value = "sortByRating", required = false) String sortByRating,
-            Model model) {
+    public String listCoffeeShops(@RequestParam(value = "sortByRating", required = false)
+                                  String sortByRating, Model model) {
         List<CoffeeShop> coffeeShops;
         if ("desc".equals(sortByRating)) {
             coffeeShops = coffeeShopService.findAllOrderByRatingDesc();
@@ -37,7 +36,7 @@ public class CoffeeShopController {
         return "coffee-list";
     }
 
-    // Форма для создания новой кофейни
+    // Coffeeshop creation form
     @GetMapping("/new")
     public String createCoffeeShopForm(Model model) {
         model.addAttribute("coffeeShop", new CoffeeShop());

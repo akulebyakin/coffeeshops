@@ -15,8 +15,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -34,7 +33,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    // Проверяем уникальность email и login
+    // Check if email or login already exists
     public boolean isEmailOrLoginExists(String email, String login) {
         return userRepository.existsByEmail(email) || userRepository.existsByLogin(login);
     }

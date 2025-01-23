@@ -18,19 +18,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Имя не может быть пустым")
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 
-    @Email(message = "Неверный формат email")
-    @NotEmpty(message = "Email не может быть пустым")
+    @Email(message = "Wrong email format")
+    @NotEmpty(message = "Email cannot be empty")
     @Column(unique = true)
     private String email;
 
-    @NotEmpty(message = "Логин не может быть пустым")
+    @NotEmpty(message = "login cannot be empty")
     @Column(unique = true)
     private String login;
 
-    @NotEmpty(message = "Пароль не может быть пустым")
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -38,7 +38,8 @@ public class User {
 
     public enum Role {
         USER,
-        ADMIN
+        ADMIN,
+        MANAGER
     }
 }
 

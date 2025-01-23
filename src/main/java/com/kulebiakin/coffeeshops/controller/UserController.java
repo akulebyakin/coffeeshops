@@ -22,7 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Список всех пользователей (доступен только ADMIN)
+    // List of all users (only for ADMIN)
     @GetMapping
     public String listUsers(Model model) {
         List<User> users = userService.findAll();
@@ -30,8 +30,7 @@ public class UserController {
         return "users";
     }
 
-    // Редактирование профиля (может быть как для админа, так и для пользователя)
-    // Здесь для упрощения показываем пример редактирования по id
+    // Edit user by id (can be used by both ADMIN and USER)
     @GetMapping("/edit/{id}")
     public String editUser(@PathVariable Long id, Model model) {
         User user = userService.findById(id);

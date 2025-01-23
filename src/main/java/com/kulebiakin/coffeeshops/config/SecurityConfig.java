@@ -1,16 +1,26 @@
 package com.kulebiakin.coffeeshops.config;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -18,7 +28,6 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
 
-    // Внедряем UserDetailsService через конструктор
     public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
@@ -36,23 +45,32 @@ public class SecurityConfig {
         return authProvider;
     }
 
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new SimpleUrlAuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                                Authentication authentication) throws IOException, ServletException {
+                String username = authentication.getName();
+                request.getSession().setAttribute("username", username);
+                super.onAuthenticationSuccess(request, response, authentication);
+            }
+        };
+    }
+
     /**
-     * Создаём (или настраиваем) AuthenticationManager,
-     * используя наш DaoAuthenticationProvider.
+     * Create (or setup) AuthenticationManager, using our DaoAuthenticationProvider.
      */
     @Bean
-    public org.springframework.security.authentication.AuthenticationManager authenticationManager(
-            HttpSecurity http,
-            DaoAuthenticationProvider authProvider
-    ) throws Exception {
-        // Получаем "общий" AuthenticationManagerBuilder из HttpSecurity
+    public AuthenticationManager authenticationManager(HttpSecurity http, DaoAuthenticationProvider authProvider) throws Exception {
+        // Get "shared" AuthenticationManagerBuilder from HttpSecurity
         AuthenticationManagerBuilder authBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
 
-        // Регистрируем наш провайдер
+        // Register our provider
         authBuilder.authenticationProvider(authProvider);
 
-        // Собираем AuthenticationManager
+        // Build AuthenticationManager
         return authBuilder.build();
     }
 
@@ -69,6 +87,7 @@ public class SecurityConfig {
                 .usernameParameter("login")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/?loginSuccess", true)
+                .successHandler(authenticationSuccessHandler())
                 .failureUrl("/login?error=true")
                 .permitAll()
         );
@@ -79,8 +98,8 @@ public class SecurityConfig {
                 .permitAll()
         );
 
-        // Отключаем CSRF (в целях примера)
-        http.csrf(csrf -> csrf.disable());
+        // Turn off CSRF (for example purposes)
+        http.csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
