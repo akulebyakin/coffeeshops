@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <title>Главная</title>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div th:if="${param.loginSuccess}">
-    <p style="color: green;">Добро пожаловать <span th:text="${session.username}"></span>!</p>
-</div>
+<header>
+    <h1>Добро пожаловать в Coffee Shops</h1>
+    <div th:if="${session.loginSuccess}">
+        <p style="color: green;">Вы вошли как пользователь <span th:text="${session.username}"></span>!</p>
+    </div>
+</header>
+<main>
+    <nav>
+        <a href="/login" th:if="${session.loginSuccess == null || !session.loginSuccess}">Войти</a> |
+        <a href="/logout" th:if="${session.loginSuccess != null && session.loginSuccess}">Выйти</a> |
+        <a href="/register" th:if="${session.loginSuccess == null || !session.loginSuccess}">Регистрация</a> |
+        <a href="/coffee-shops">Список кофеен</a> |
+        <a href="/users" th:if="${session.loginSuccess != null && session.loginSuccess && session.role == 'ROLE_ADMIN'}">Список пользователей</a>
+    </nav>
 
-<h1>Добро пожаловать на сайт кофеен</h1>
-<a href="/login">Войти</a> | <a href="/register">Регистрация</a> |
-<a href="/coffee-shops">Список кофеен</a>
-<a href="/users">Список пользователей</a>
+    <div th:if="${session.loginSuccess != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
+        <a href="/coffee-form" class="btn">Добавить новую кофейню</a>
+    </div>
+
+</main>
 </body>
 </html>

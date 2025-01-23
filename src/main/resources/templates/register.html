@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>Регистрация</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <h1>Регистрация</h1>
@@ -31,7 +33,7 @@
         <input type="password" id="password" th:field="*{password}" />
         <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
     </div>
-    <button type="submit">Зарегистрироваться</button>
+    <button type="submit" class="btn">Зарегистрироваться</button>
 </form>
 
 <a href="/">На главную</a>

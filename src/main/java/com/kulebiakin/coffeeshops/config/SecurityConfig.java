@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,54 +53,47 @@ public class SecurityConfig {
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                                 Authentication authentication) throws IOException, ServletException {
                 String username = authentication.getName();
+                String role = authentication.getAuthorities().stream()
+                        .findFirst()
+                        .map(GrantedAuthority::getAuthority)
+                        .orElse(null);
                 request.getSession().setAttribute("username", username);
+                request.getSession().setAttribute("loginSuccess", true);
+                request.getSession().setAttribute("role", role);
                 super.onAuthenticationSuccess(request, response, authentication);
             }
         };
     }
 
-    /**
-     * Create (or setup) AuthenticationManager, using our DaoAuthenticationProvider.
-     */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, DaoAuthenticationProvider authProvider) throws Exception {
-        // Get "shared" AuthenticationManagerBuilder from HttpSecurity
         AuthenticationManagerBuilder authBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
-
-        // Register our provider
         authBuilder.authenticationProvider(authProvider);
-
-        // Build AuthenticationManager
         return authBuilder.build();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/register", "/error", "/css/**").permitAll()
-                .requestMatchers("/users/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-        );
-
-        http.formLogin(login -> login
-                .loginPage("/login")
-                .usernameParameter("login")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/?loginSuccess", true)
-                .successHandler(authenticationSuccessHandler())
-                .failureUrl("/login?error=true")
-                .permitAll()
-        );
-
-        http.logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .permitAll()
-        );
-
-        // Turn off CSRF (for example purposes)
-        http.csrf(AbstractHttpConfigurer::disable);
+                        .requestMatchers("/", "/login", "/register", "/error", "/css/**").permitAll()
+                        .requestMatchers("/users/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .usernameParameter("login")
+                        .passwordParameter("password")
+                        .successHandler(authenticationSuccessHandler())
+                        .failureUrl("/login?error=true")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll()
+                )
+                .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
@@ -109,4 +103,3 @@ public class SecurityConfig {
         return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/webjars/**");
     }
 }
-

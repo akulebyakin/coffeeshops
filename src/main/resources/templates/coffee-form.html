@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>Форма кофейни</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <h1 th:text="${#request.getRequestURI().contains('edit') ? 'Редактирование кофейни' : 'Создание кофейни'}"></h1>
@@ -40,7 +42,7 @@
         <input type="number" id="rating" th:field="*{rating}" min="1" max="100" />
         <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
     </div>
-    <button type="submit">Сохранить</button>
+    <button type="submit" class="btn">Сохранить</button>
 </form>
 
 <form th:if="${not(#request.getRequestURI().contains('edit'))}"
@@ -76,7 +78,7 @@
         <input type="number" id="rating" th:field="*{rating}" min="1" max="100" />
         <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
     </div>
-    <button type="submit">Сохранить</button>
+    <button type="submit" class="btn">Сохранить</button>
 </form>
 
 <a href="/coffee-shops">Назад к списку</a>
