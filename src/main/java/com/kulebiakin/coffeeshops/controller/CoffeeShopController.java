@@ -30,16 +30,23 @@ public class CoffeeShopController {
 
     // Show list of coffee shops
     @GetMapping
-    public String listCoffeeShops(@RequestParam(value = "sortByRating", required = false) String sortByRating, Model model) {
+    public String listCoffeeShops(@RequestParam(value = "sortBy", required = false) String sortBy,
+                                  @RequestParam(value = "order", required = false) String order,
+                                  Model model) {
         List<CoffeeShop> coffeeShops;
-        if ("desc".equals(sortByRating)) {
-            coffeeShops = coffeeShopService.findAllOrderByRatingDesc();
-        } else {
+
+        if (sortBy == null || order == null) {
             coffeeShops = coffeeShopService.findAll();
+        } else {
+            coffeeShops = coffeeShopService.findAllSorted(sortBy, order);
         }
+
         model.addAttribute("coffeeShops", coffeeShops);
+        model.addAttribute("currentSortBy", sortBy);
+        model.addAttribute("currentOrder", order);
         return "coffee-list";
     }
+
 
     // Add new coffee shop (only available for MANAGER or ADMIN)
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")

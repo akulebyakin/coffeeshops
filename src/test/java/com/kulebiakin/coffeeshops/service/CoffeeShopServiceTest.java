@@ -119,4 +119,70 @@ class CoffeeShopServiceTest {
 
         verify(coffeeShopRepository, never()).save(any(CoffeeShop.class));
     }
+
+    @Test
+    void findAllSorted_ByNameAsc_ReturnsListOfCoffeeShopsSortedByNameAsc() {
+        List<CoffeeShop> coffeeShops = List.of(new CoffeeShop(), new CoffeeShop());
+        when(coffeeShopRepository.findAllByOrderByNameAsc()).thenReturn(coffeeShops);
+
+        List<CoffeeShop> result = coffeeShopService.findAllSorted("name", "asc");
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void findAllSorted_ByNameDesc_ReturnsListOfCoffeeShopsSortedByNameDesc() {
+        List<CoffeeShop> coffeeShops = List.of(new CoffeeShop(), new CoffeeShop());
+        when(coffeeShopRepository.findAllByOrderByNameDesc()).thenReturn(coffeeShops);
+
+        List<CoffeeShop> result = coffeeShopService.findAllSorted("name", "desc");
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void findAllSorted_ByRatingAsc_ReturnsListOfCoffeeShopsSortedByRatingAsc() {
+        List<CoffeeShop> coffeeShops = List.of(new CoffeeShop(), new CoffeeShop());
+        when(coffeeShopRepository.findAllByOrderByRatingAsc()).thenReturn(coffeeShops);
+
+        List<CoffeeShop> result = coffeeShopService.findAllSorted("rating", "asc");
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void findAllSorted_ByRatingDesc_ReturnsListOfCoffeeShopsSortedByRatingDesc() {
+        List<CoffeeShop> coffeeShops = List.of(new CoffeeShop(), new CoffeeShop());
+        when(coffeeShopRepository.findAllByOrderByRatingDesc()).thenReturn(coffeeShops);
+
+        List<CoffeeShop> result = coffeeShopService.findAllSorted("rating", "desc");
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void findAllSorted_ByIdAsc_ReturnsListOfCoffeeShopsSortedByIdAsc() {
+        List<CoffeeShop> coffeeShops = List.of(new CoffeeShop(), new CoffeeShop());
+        when(coffeeShopRepository.findAllByOrderByIdAsc()).thenReturn(coffeeShops);
+
+        List<CoffeeShop> result = coffeeShopService.findAllSorted("id", "asc");
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void findAllSorted_ByIdDesc_ReturnsListOfCoffeeShopsSortedByIdDesc() {
+        List<CoffeeShop> coffeeShops = List.of(new CoffeeShop(), new CoffeeShop());
+        when(coffeeShopRepository.findAllByOrderByIdDesc()).thenReturn(coffeeShops);
+
+        List<CoffeeShop> result = coffeeShopService.findAllSorted("id", "desc");
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+    }
 }

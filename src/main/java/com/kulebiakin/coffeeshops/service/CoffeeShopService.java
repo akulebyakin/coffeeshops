@@ -56,5 +56,24 @@ public class CoffeeShopService {
         existingCoffeeShop.setImage(coffeeShop.getImage());
         existingCoffeeShop.setRating(coffeeShop.getRating());
     }
+
+    public List<CoffeeShop> findAllSorted(String sortBy, String order) {
+        if ("desc".equalsIgnoreCase(order)) {
+            return switch (sortBy) {
+                case "name" -> coffeeShopRepository.findAllByOrderByNameDesc();
+                case "rating" -> coffeeShopRepository.findAllByOrderByRatingDesc();
+                default -> // sortBy = "id"
+                        coffeeShopRepository.findAllByOrderByIdDesc();
+            };
+        } else {
+            return switch (sortBy) {
+                case "name" -> coffeeShopRepository.findAllByOrderByNameAsc();
+                case "rating" -> coffeeShopRepository.findAllByOrderByRatingAsc();
+                default -> // sortBy = "id"
+                        coffeeShopRepository.findAllByOrderByIdAsc();
+            };
+        }
+    }
+
 }
 

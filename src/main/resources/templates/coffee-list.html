@@ -8,7 +8,23 @@
 <body>
 <h1>Список кофеен</h1>
 
-<a th:href="@{/coffee-shops(sortByRating=desc)}">Сортировать по убыванию рейтинга</a>
+<div>
+    <span>Сортировать по:</span>
+    <a th:href="@{/coffee-shops(sortBy='id', order='asc')}"
+       th:classappend="${currentSortBy == 'id' and currentOrder == 'asc'} ? 'active' : ''">ID ↑</a>
+    <a th:href="@{/coffee-shops(sortBy='id', order='desc')}"
+       th:classappend="${currentSortBy == 'id' and currentOrder == 'desc'} ? 'active' : ''">ID ↓</a> |
+
+    <a th:href="@{/coffee-shops(sortBy='name', order='asc')}"
+       th:classappend="${currentSortBy == 'name' and currentOrder == 'asc'} ? 'active' : ''">Имя ↑</a>
+    <a th:href="@{/coffee-shops(sortBy='name', order='desc')}"
+       th:classappend="${currentSortBy == 'name' and currentOrder == 'desc'} ? 'active' : ''">Имя ↓</a> |
+
+    <a th:href="@{/coffee-shops(sortBy='rating', order='asc')}"
+       th:classappend="${currentSortBy == 'rating' and currentOrder == 'asc'} ? 'active' : ''">Рейтинг ↑</a>
+    <a th:href="@{/coffee-shops(sortBy='rating', order='desc')}"
+       th:classappend="${currentSortBy == 'rating' and currentOrder == 'desc'} ? 'active' : ''">Рейтинг ↓</a>
+</div>
 
 <table border="1">
     <tr>
