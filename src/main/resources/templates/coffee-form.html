@@ -2,85 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Форма кофейни</title>
+    <title>Добавить или редактировать кофейню</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<h1 th:text="${#request.getRequestURI().contains('edit') ? 'Редактирование кофейни' : 'Создание кофейни'}"></h1>
+<h1 th:text="${#strings.isEmpty(coffeeShop.id) ? 'Добавить кофейню' : 'Редактировать кофейню'}"></h1>
+<form th:action="${#strings.isEmpty(coffeeShop.id) ? '/coffee-shops' : '/coffee-shops/edit/' + coffeeShop.id}" method="post">
+    <label for="name">Название кофейни:</label><br>
+    <input type="text" id="name" name="name" th:value="${coffeeShop.name}" required><br><br>
 
-<form th:if="${#request.getRequestURI().contains('edit')}"
-      th:action="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}"
-      th:object="${coffeeShop}" method="post">
-    <input type="hidden" th:field="*{id}" />
-    <div>
-        <label for="name">Название:</label>
-        <input type="text" id="name" th:field="*{name}" />
-        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-    </div>
-    <div>
-        <label for="address">Адрес:</label>
-        <input type="text" id="address" th:field="*{address}" />
-    </div>
-    <div>
-        <label for="phone">Телефон:</label>
-        <input type="text" id="phone" th:field="*{phone}" />
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="text" id="email" th:field="*{email}" />
-    </div>
-    <div>
-        <label for="website">Сайт:</label>
-        <input type="text" id="website" th:field="*{website}" />
-    </div>
-    <div>
-        <label for="description">Описание:</label>
-        <textarea id="description" th:field="*{description}"></textarea>
-    </div>
-    <div>
-        <label for="rating">Рейтинг:</label>
-        <input type="number" id="rating" th:field="*{rating}" min="1" max="100" />
-        <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
-    </div>
-    <button type="submit" class="btn">Сохранить</button>
+    <label for="address">Адрес:</label><br>
+    <input type="text" id="address" name="address" th:value="${coffeeShop.address}" required><br><br>
+
+    <label for="phone">Телефон:</label><br>
+    <input type="text" id="phone" name="phone" th:value="${coffeeShop.phone}"><br><br>
+
+    <label for="email">Электронная почта:</label><br>
+    <input type="email" id="email" name="email" th:value="${coffeeShop.email}"><br><br>
+
+    <label for="website">Сайт:</label><br>
+    <input type="url" id="website" name="website" th:value="${coffeeShop.website}"><br><br>
+
+    <label for="description">Описание:</label><br>
+    <textarea id="description" name="description" rows="4" cols="50" th:text="${coffeeShop.description}"></textarea><br><br>
+
+    <label for="rating">Рейтинг:</label><br>
+    <input type="number" id="rating" name="rating" min="1" max="100" th:value="${coffeeShop.rating}"><br><br>
+
+    <button type="submit">Сохранить</button>
 </form>
-
-<form th:if="${not(#request.getRequestURI().contains('edit'))}"
-      th:action="@{/coffee-shops}"
-      th:object="${coffeeShop}" method="post">
-    <div>
-        <label for="name">Название:</label>
-        <input type="text" id="name" th:field="*{name}" />
-        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-    </div>
-    <div>
-        <label for="address">Адрес:</label>
-        <input type="text" id="address" th:field="*{address}" />
-    </div>
-    <div>
-        <label for="phone">Телефон:</label>
-        <input type="text" id="phone" th:field="*{phone}" />
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="text" id="email" th:field="*{email}" />
-    </div>
-    <div>
-        <label for="website">Сайт:</label>
-        <input type="text" id="website" th:field="*{website}" />
-    </div>
-    <div>
-        <label for="description">Описание:</label>
-        <textarea id="description" th:field="*{description}"></textarea>
-    </div>
-    <div>
-        <label for="rating">Рейтинг:</label>
-        <input type="number" id="rating" th:field="*{rating}" min="1" max="100" />
-        <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
-    </div>
-    <button type="submit" class="btn">Сохранить</button>
-</form>
-
 <a href="/coffee-shops">Назад к списку</a>
 </body>
 </html>

@@ -14,15 +14,15 @@
 </header>
 <main>
     <nav>
-        <a href="/login" th:if="${session.loginSuccess == null || !session.loginSuccess}">Войти</a> |
-        <a href="/logout" th:if="${session.loginSuccess != null && session.loginSuccess}">Выйти</a> |
-        <a href="/register" th:if="${session.loginSuccess == null || !session.loginSuccess}">Регистрация</a> |
-        <a href="/coffee-shops">Список кофеен</a> |
+        <a href="/login" th:if="${session.loginSuccess == null || !session.loginSuccess}">Войти</a>
+        <a href="/logout" th:if="${session.loginSuccess != null && session.loginSuccess}">Выйти</a>
+        <a href="/register" th:if="${session.loginSuccess == null || !session.loginSuccess}">Регистрация</a>
+        <a href="/coffee-shops">Список кофеен</a>
         <a href="/users" th:if="${session.loginSuccess != null && session.loginSuccess && session.role == 'ROLE_ADMIN'}">Список пользователей</a>
     </nav>
 
     <div th:if="${session.loginSuccess != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
-        <a href="/coffee-form" class="btn">Добавить новую кофейню</a>
+        <a href="/coffee-shops/new" class="btn">Добавить новую кофейню</a>
     </div>
 
 </main>

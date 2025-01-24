@@ -36,5 +36,9 @@ public class CoffeeShopService {
     public void delete(Long id) {
         coffeeShopRepository.deleteById(id);
     }
+
+    public void deleteById(Long id) {
+        coffeeShopRepository.deleteById(id);
+    }
 }
 

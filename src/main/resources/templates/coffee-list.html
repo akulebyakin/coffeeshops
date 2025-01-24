@@ -8,8 +8,6 @@
 <body>
 <h1>Список кофеен</h1>
 
-<a th:href="@{/coffee-shops(new=true)}">Добавить новую кофейню</a>
-<br/><br/>
 <a th:href="@{/coffee-shops(sortByRating=desc)}">Сортировать по убыванию рейтинга</a>
 
 <table border="1">
@@ -22,7 +20,7 @@
         <th>Сайт</th>
         <th>Описание</th>
         <th>Рейтинг</th>
-        <th>Действия</th>
+        <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">Действия</th>
     </tr>
     <tr th:each="coffeeShop : ${coffeeShops}">
         <td th:text="${coffeeShop.id}"></td>
@@ -33,12 +31,18 @@
         <td th:text="${coffeeShop.website}"></td>
         <td th:text="${coffeeShop.description}"></td>
         <td th:text="${coffeeShop.rating}"></td>
-        <td>
+        <td th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
             <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}">Редактировать</a>
+            <a th:href="@{/coffee-shops/delete/{id}(id=${coffeeShop.id})}"
+               onclick="return confirm('Вы уверены, что хотите удалить эту кофейню?');">Удалить</a>
         </td>
     </tr>
 </table>
 
+<div th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
+    <a href="/coffee-shops/new" class="btn">Добавить новую кофейню</a>
+</div>
+<br>
 <a href="/">На главную</a>
 </body>
 </html>
