@@ -2,6 +2,7 @@ package com.kulebiakin.coffeeshops.service;
 
 import com.kulebiakin.coffeeshops.entity.CoffeeShop;
 import com.kulebiakin.coffeeshops.repository.CoffeeShopRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +34,27 @@ public class CoffeeShopService {
         return coffeeShopRepository.save(coffeeShop);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         coffeeShopRepository.deleteById(id);
     }
 
-    public void deleteById(Long id) {
-        coffeeShopRepository.deleteById(id);
+    public void updateCoffeeShop(Long id, @Valid CoffeeShop coffeeShop) {
+        CoffeeShop existingCoffeeShop = coffeeShopRepository.findById(id).orElse(null);
+        if (existingCoffeeShop != null) {
+            mapToExistingCoffeeShop(coffeeShop, existingCoffeeShop);
+            coffeeShopRepository.save(existingCoffeeShop);
+        }
+    }
+
+    private static void mapToExistingCoffeeShop(CoffeeShop coffeeShop, CoffeeShop existingCoffeeShop) {
+        existingCoffeeShop.setName(coffeeShop.getName());
+        existingCoffeeShop.setAddress(coffeeShop.getAddress());
+        existingCoffeeShop.setPhone(coffeeShop.getPhone());
+        existingCoffeeShop.setEmail(coffeeShop.getEmail());
+        existingCoffeeShop.setWebsite(coffeeShop.getWebsite());
+        existingCoffeeShop.setDescription(coffeeShop.getDescription());
+        existingCoffeeShop.setImage(coffeeShop.getImage());
+        existingCoffeeShop.setRating(coffeeShop.getRating());
     }
 }
 

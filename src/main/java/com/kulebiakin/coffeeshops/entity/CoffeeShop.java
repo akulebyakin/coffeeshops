@@ -33,6 +33,10 @@ public class CoffeeShop {
     @Max(100)
     private int rating;
 
+    // Connection to the user who added the coffeeshop
+    @ManyToOne
+    @JoinColumn(name = "added_by", nullable = false)
+    private User addedBy;
 
     @Min(1)
     @Max(100)

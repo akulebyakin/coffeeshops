@@ -21,7 +21,8 @@ public class UserService {
     }
 
     public User findByLogin(String login) {
-        return userRepository.findByLogin(login);
+        return userRepository.findByLogin(login).orElseThrow(() ->
+                new RuntimeException("User not found with login: " + login));
     }
 
     public List<User> findAll() {

@@ -1,10 +1,13 @@
 package com.kulebiakin.coffeeshops.controller;
 
 import com.kulebiakin.coffeeshops.entity.CoffeeShop;
+import com.kulebiakin.coffeeshops.entity.User;
 import com.kulebiakin.coffeeshops.service.CoffeeShopService;
+import com.kulebiakin.coffeeshops.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +20,12 @@ import java.util.List;
 public class CoffeeShopController {
 
     private final CoffeeShopService coffeeShopService;
+    private final UserService userService;
 
     @Autowired
-    public CoffeeShopController(CoffeeShopService coffeeShopService) {
+    public CoffeeShopController(CoffeeShopService coffeeShopService, UserService userService) {
         this.coffeeShopService = coffeeShopService;
+        this.userService = userService;
     }
 
     // Show list of coffee shops
@@ -45,12 +50,17 @@ public class CoffeeShopController {
     }
 
     // Save new coffeeshop
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @PostMapping
-    public String saveCoffeeShop(@ModelAttribute("coffeeShop") @Valid CoffeeShop coffeeShop, BindingResult bindingResult) {
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    public String saveCoffeeShop(@ModelAttribute("coffeeShop") @Valid CoffeeShop coffeeShop,
+                                 BindingResult bindingResult,
+                                 Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return "coffee-form";
         }
+
+        User currentUser = userService.findByLogin(authentication.getName());
+        coffeeShop.setAddedBy(currentUser); // Set current user as the one who added the coffee shop
         coffeeShopService.save(coffeeShop);
         return "redirect:/coffee-shops";
     }
@@ -73,8 +83,7 @@ public class CoffeeShopController {
         if (bindingResult.hasErrors()) {
             return "coffee-form";
         }
-        coffeeShop.setId(id);
-        coffeeShopService.save(coffeeShop);
+        coffeeShopService.updateCoffeeShop(id, coffeeShop);
         return "redirect:/coffee-shops";
     }
 

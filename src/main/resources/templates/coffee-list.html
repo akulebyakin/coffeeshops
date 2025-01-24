@@ -20,7 +20,9 @@
         <th>Сайт</th>
         <th>Описание</th>
         <th>Рейтинг</th>
-        <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">Действия</th>
+        <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
+            Действия
+        </th>
     </tr>
     <tr th:each="coffeeShop : ${coffeeShops}">
         <td th:text="${coffeeShop.id}"></td>
@@ -31,11 +33,15 @@
         <td th:text="${coffeeShop.website}"></td>
         <td th:text="${coffeeShop.description}"></td>
         <td th:text="${coffeeShop.rating}"></td>
-        <td th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
-            <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}">Редактировать</a>
-            <br>
-            <a th:href="@{/coffee-shops/delete/{id}(id=${coffeeShop.id})}"
-               onclick="return confirm('Вы уверены, что хотите удалить эту кофейню?');">Удалить</a>
+        <td th:if="${session != null
+                && session.loginSuccess
+                && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
+            <span th:if="${(session.role == 'ROLE_MANAGER' && coffeeShop.addedBy.login == session.username) || session.role == 'ROLE_ADMIN'}">
+                <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}">Редактировать</a>
+                <br>
+                <a th:href="@{/coffee-shops/delete/{id}(id=${coffeeShop.id})}"
+                   onclick="return confirm('Вы уверены, что хотите удалить эту кофейню?');">Удалить</a>
+            </span>
         </td>
     </tr>
 </table>
