@@ -1,4 +1,4 @@
-package com.kulebiakin.coffeeshops.util.validator;
+package com.kulebiakin.coffeeshops.util.validation;
 
 import org.junit.jupiter.api.Test;
 

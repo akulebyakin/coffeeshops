@@ -1,9 +1,9 @@
 package com.kulebiakin.coffeeshops.entity;
 
+import com.kulebiakin.coffeeshops.util.validation.NotEmptyAndNotBlank;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Имя не может быть пустым")
+    @NotEmptyAndNotBlank(
+            emptyMessage = "Имя не может быть пустым",
+            blankMessage = "Имя не может содержать только пробелы"
+    )
     private String name;
 
     @Email(message = "Неверный формат email")
@@ -27,7 +30,10 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @Size(min = 3, message = "Логин должен содержать не менее 3 символов")
+    @NotEmptyAndNotBlank(
+            emptyMessage = "Логин не может быть пустым",
+            blankMessage = "Логин не может содержать только пробелы"
+    )
     @Column(unique = true)
     private String login;
 

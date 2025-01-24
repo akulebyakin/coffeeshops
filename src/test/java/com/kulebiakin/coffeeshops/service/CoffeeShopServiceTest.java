@@ -96,9 +96,8 @@ class CoffeeShopServiceTest {
 
         when(coffeeShopRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            coffeeShopService.updateCoffeeShop(1L, updatedCoffeeShop);
-        });
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                coffeeShopService.updateCoffeeShop(1L, updatedCoffeeShop));
 
         assertEquals("Coffee shop not found with id: 1", exception.getMessage());
         verify(coffeeShopRepository, never()).save(any(CoffeeShop.class));

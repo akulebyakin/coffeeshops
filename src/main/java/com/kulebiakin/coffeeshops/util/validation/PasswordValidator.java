@@ -1,4 +1,4 @@
-package com.kulebiakin.coffeeshops.util.validator;
+package com.kulebiakin.coffeeshops.util.validation;
 
 public class PasswordValidator {
     private static final int PASSWORD_MINIMUM_LENGTH = 3;

@@ -2,7 +2,7 @@ package com.kulebiakin.coffeeshops.controller;
 
 import com.kulebiakin.coffeeshops.entity.User;
 import com.kulebiakin.coffeeshops.service.UserService;
-import com.kulebiakin.coffeeshops.util.validator.PasswordValidator;
+import com.kulebiakin.coffeeshops.util.validation.PasswordValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
