@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 public class AuthController {
@@ -38,7 +41,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+    public String registerUser(@ModelAttribute("user") @Valid User user,
+                               BindingResult bindingResult,
+                               @RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile,
+                               Model model) {
         // Check if email or login already exists
         if (userService.isEmailOrLoginExists(user.getEmail(), user.getLogin())) {
             model.addAttribute("registrationError", "Пользователь с таким email или login уже существует");
@@ -48,6 +54,15 @@ public class AuthController {
         // Check if password contains at least 3 characters
         if (!PasswordValidator.isValid(user.getPassword())) {
             bindingResult.rejectValue("password", "error.user", "Пароль должен содержать не менее 3 символов");
+            return "register";
+        }
+
+        try {
+            if (avatarFile != null && !avatarFile.isEmpty()) {
+                user.setAvatar(avatarFile.getBytes());
+            }
+        } catch (IOException e) {
+            model.addAttribute("registrationError", "Ошибка загрузки аватара");
             return "register";
         }
 

@@ -10,6 +10,16 @@
 
 <form th:action="@{/register}" th:object="${user}" method="post">
     <div>
+        <label for="avatarFile" class="custom-file-upload">Загрузить аватар</label>
+        <input type="file" id="avatarFile" name="avatarFile" accept="image/*" onchange="validateFileSize(event)"/>
+        <div class="warning-message">Максимальный размер файла: 2 МБ</div>
+        <div id="avatarPreview" style="margin-top: 10px;">
+            <img id="previewImage" src="#" alt="Предварительный просмотр"
+                 style="display: none; width: 150px; height: 150px;"/>
+        </div>
+    </div>
+
+    <div>
         <label for="name">Имя:</label>
         <input type="text" id="name" th:field="*{name}" />
         <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
@@ -36,5 +46,7 @@
 </form>
 
 <a href="/">На главную</a>
+
+<script src="/js/avatar-upload.js"></script>
 </body>
 </html>
