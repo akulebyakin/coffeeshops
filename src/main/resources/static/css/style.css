@@ -72,8 +72,7 @@ nav a:hover {
 }
 
 /* Input fields */
-input[type="text"], input[type="password"], input[type="email"] {
-    /*width: 100%;*/
+input, textarea, select {
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #333333; /* Dark borders */
@@ -84,11 +83,58 @@ input[type="text"], input[type="password"], input[type="email"] {
     font-size: 1em;
 }
 
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+input:focus, textarea:focus, select:focus {
     border-color: #ffcc00; /* Golden color on focus */
     outline: none;
     box-shadow: 0 0 5px #ffcc00;
     background-color: #3a3a3a; /* Even lighter on focus */
+}
+
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
+    color: #aaaaaa; /* Light gray text for placeholders */
+}
+
+/* Additional styles for select */
+select {
+    min-width: 150px;
+    appearance: none; /* Removes browser arrow */
+    cursor: pointer;
+}
+
+/* Styles for input with type="number" */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Removes arrows for number input */
+}
+
+input[type="number"] {
+    appearance: textfield; /* For cross-browser consistency */
+}
+
+/* General styles for textarea */
+textarea {
+    resize: vertical; /* Allows resizing only vertically */
+    min-height: 200px;
+}
+
+/* Styles for disabled elements */
+input:disabled,
+textarea:disabled,
+select:disabled {
+    background-color: #333333; /* Darker background */
+    color: #888888; /* Light gray text */
+    cursor: not-allowed;
+}
+
+/* Styles for errors */
+input.error,
+textarea.error,
+select.error {
+    border-color: #ff3333; /* Red border for errors */
+    box-shadow: 0 0 5px #ff3333;
 }
 
 /* Style for pop-up messages */
