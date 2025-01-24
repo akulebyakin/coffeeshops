@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class CoffeeShopService {
 
     private final CoffeeShopRepository coffeeShopRepository;
@@ -31,7 +32,6 @@ public class CoffeeShopService {
         return coffeeShopRepository.findById(id).orElse(null);
     }
 
-    @Transactional
     public CoffeeShop save(CoffeeShop coffeeShop) {
         return coffeeShopRepository.save(coffeeShop);
     }
@@ -40,7 +40,6 @@ public class CoffeeShopService {
         coffeeShopRepository.deleteById(id);
     }
 
-    @Transactional
     public CoffeeShop updateCoffeeShop(Long id, @Valid CoffeeShop coffeeShop) {
         CoffeeShop existingCoffeeShop = coffeeShopRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Coffee shop not found with id: " + id));

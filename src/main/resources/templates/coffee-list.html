@@ -8,6 +8,13 @@
 <body>
 <h1>Список кофеен</h1>
 
+<div th:if="${successMessage}" class="alert alert-success">
+    <p style="color: green;" th:text="${successMessage}"></p>
+</div>
+<div th:if="${errorMessge}" class="alert error-message">
+    <p th:text="${errorMessage}"></p>
+</div>
+
 <div>
     <span>Сортировать по:</span>
     <a th:href="@{/coffee-shops(sortBy='id', order='asc')}"

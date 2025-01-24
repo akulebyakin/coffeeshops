@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -61,14 +62,17 @@ public class CoffeeShopController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     public String saveCoffeeShop(@ModelAttribute("coffeeShop") @Valid CoffeeShop coffeeShop,
                                  BindingResult bindingResult,
-                                 Authentication authentication) {
+                                 Authentication authentication,
+                                 RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "coffee-form";
         }
 
         User currentUser = userService.findByLogin(authentication.getName());
         coffeeShop.setAddedBy(currentUser); // Set current user as the one who added the coffee shop
-        coffeeShopService.save(coffeeShop);
+        CoffeeShop savedCoffeeshop = coffeeShopService.save(coffeeShop);
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Кофейня успешно добавлена. ID = " + savedCoffeeshop.getId());
         return "redirect:/coffee-shops";
     }
 
@@ -86,18 +90,25 @@ public class CoffeeShopController {
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @PostMapping("/edit/{id}")
-    public String updateCoffeeShop(@PathVariable Long id, @ModelAttribute("coffeeShop") @Valid CoffeeShop coffeeShop, BindingResult bindingResult) {
+    public String updateCoffeeShop(@PathVariable Long id,
+                                   @ModelAttribute("coffeeShop") @Valid CoffeeShop coffeeShop,
+                                   BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "coffee-form";
         }
         coffeeShopService.updateCoffeeShop(id, coffeeShop);
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Кофейня успешно обновлена. ID = " + id);
         return "redirect:/coffee-shops";
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @GetMapping("/delete/{id}")
-    public String deleteCoffeeShop(@PathVariable Long id) {
+    public String deleteCoffeeShop(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         coffeeShopService.deleteById(id);
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Кофейня успешно удалена. ID = " + id);
         return "redirect:/coffee-shops";
     }
 
