@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,7 +54,8 @@ public class UserController {
     public String updateUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult,
                              @RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile,
-                             Model model) {
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
         // Get existing user by id
         User existingUser = userService.findById(user.getId());
         if (existingUser == null) {
@@ -74,7 +76,7 @@ public class UserController {
             return "user-edit";
         }
 
-        if (avatarFile!= null && !avatarFile.isEmpty()) {
+        if (avatarFile != null && !avatarFile.isEmpty()) {
             try {
                 userService.updateAvatar(user, avatarFile);
             } catch (IOException e) {
@@ -88,13 +90,20 @@ public class UserController {
         }
 
         userService.updateUser(user);
+        redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно изменен. ID = " + user.getId());
         return "redirect:/users";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        User existingUser = userService.findById(id);
+        if (existingUser == null) {
+            redirectAttributes.addFlashAttribute("error", "Пользователь не найден. ID = " + id);
+            return "redirect:/users";
+        }
         userService.deleteById(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно удалён. ID = " + id);
         return "redirect:/users";
     }
 
