@@ -2,9 +2,9 @@ package com.kulebiakin.coffeeshops.controller;
 
 import com.kulebiakin.coffeeshops.entity.User;
 import com.kulebiakin.coffeeshops.service.UserService;
+import com.kulebiakin.coffeeshops.util.validator.PasswordValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,14 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-
     private final UserService userService;
 
     @Autowired
-    public AuthController(UserService userService, AuthenticationManager authenticationManager) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping("/login")
@@ -42,22 +39,19 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "register";
-        }
         // Check if email or login already exists
         if (userService.isEmailOrLoginExists(user.getEmail(), user.getLogin())) {
             model.addAttribute("registrationError", "Пользователь с таким email или login уже существует");
             return "register";
         }
-        // Check if name is empty
-        if (user.getName() == null || user.getName().isEmpty()) {
-            model.addAttribute("error", "Имя не может быть пустым");
+
+        // Check if password contains at least 3 characters
+        if (!PasswordValidator.isValid(user.getPassword())) {
+            bindingResult.rejectValue("password", "error.user", "Пароль должен содержать не менее 3 символов");
             return "register";
         }
-        // Check if password contains at least 3 characters
-        if (user.getPassword() == null || user.getPassword().length() < 3) {
-            model.addAttribute("error", "Пароль должен содержать не менее 3 символов");
+
+        if (bindingResult.hasErrors()) {
             return "register";
         }
 

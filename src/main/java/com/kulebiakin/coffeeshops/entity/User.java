@@ -3,6 +3,7 @@ package com.kulebiakin.coffeeshops.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,19 +19,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Name cannot be empty")
+    @NotEmpty(message = "Имя не может быть пустым")
     private String name;
 
-    @Email(message = "Wrong email format")
-    @NotEmpty(message = "Email cannot be empty")
+    @Email(message = "Неверный формат email")
+    @NotEmpty(message = "Email не может быть пустым")
     @Column(unique = true)
     private String email;
 
-    @NotEmpty(message = "login cannot be empty")
+    @Size(min = 3, message = "Логин должен содержать не менее 3 символов")
     @Column(unique = true)
     private String login;
 
-    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     @Enumerated(EnumType.STRING)

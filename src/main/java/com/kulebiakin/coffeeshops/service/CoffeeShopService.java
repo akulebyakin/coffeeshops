@@ -38,12 +38,11 @@ public class CoffeeShopService {
         coffeeShopRepository.deleteById(id);
     }
 
-    public void updateCoffeeShop(Long id, @Valid CoffeeShop coffeeShop) {
-        CoffeeShop existingCoffeeShop = coffeeShopRepository.findById(id).orElse(null);
-        if (existingCoffeeShop != null) {
-            mapToExistingCoffeeShop(coffeeShop, existingCoffeeShop);
-            coffeeShopRepository.save(existingCoffeeShop);
-        }
+    public CoffeeShop updateCoffeeShop(Long id, @Valid CoffeeShop coffeeShop) {
+        CoffeeShop existingCoffeeShop = coffeeShopRepository.findById(id).orElseThrow(() ->
+                new RuntimeException("Coffee shop not found with id: " + id));
+        mapToExistingCoffeeShop(coffeeShop, existingCoffeeShop);
+        return coffeeShopRepository.save(existingCoffeeShop);
     }
 
     private static void mapToExistingCoffeeShop(CoffeeShop coffeeShop, CoffeeShop existingCoffeeShop) {

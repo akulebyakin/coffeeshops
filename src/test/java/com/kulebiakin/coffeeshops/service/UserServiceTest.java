@@ -112,4 +112,60 @@ class UserServiceTest {
 
         verify(userRepository, times(1)).deleteById(1L);
     }
+
+    @Test
+    void updateUser_UserExists_UpdatesUser() {
+        User existingUser = new User();
+        existingUser.setId(1L);
+        existingUser.setPassword("oldpassword");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(existingUser)).thenReturn(existingUser);
+        when(passwordEncoder.encode("newpassword")).thenReturn("encodedpassword");
+
+        User updatedUser = new User();
+        updatedUser.setId(1L);
+        updatedUser.setPassword("newpassword");
+        updatedUser.setName("newname");
+        updatedUser.setLogin("newlogin");
+        updatedUser.setEmail("newemail");
+        updatedUser.setRole(User.Role.USER);
+
+        userService.updateUser(updatedUser);
+
+        assertEquals("newname", existingUser.getName());
+        assertEquals("newlogin", existingUser.getLogin());
+        assertEquals("newemail", existingUser.getEmail());
+        assertEquals(User.Role.USER, existingUser.getRole());
+        assertEquals("encodedpassword", existingUser.getPassword());
+        verify(userRepository, times(1)).save(existingUser);
+    }
+
+    @Test
+    void updateUser_UserDoesNotExist_ThrowsRuntimeException() {
+        User user = new User();
+        user.setId(1L);
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> userService.updateUser(user));
+    }
+
+    @Test
+    void isEmailOrLoginExistsExcludingUser_EmailOrLoginExists_ReturnsTrue() {
+        when(userRepository.existsByEmailAndIdNot("test@example.com", 1L)).thenReturn(true);
+        when(userRepository.existsByLoginAndIdNot("testuser", 1L)).thenReturn(false);
+
+        boolean result = userService.isEmailOrLoginExistsExcludingUser("test@example.com", "testuser", 1L);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void isEmailOrLoginExistsExcludingUser_EmailOrLoginDoesNotExist_ReturnsFalse() {
+        when(userRepository.existsByEmailAndIdNot("test@example.com", 1L)).thenReturn(false);
+        when(userRepository.existsByLoginAndIdNot("testuser", 1L)).thenReturn(false);
+
+        boolean result = userService.isEmailOrLoginExistsExcludingUser("test@example.com", "testuser", 1L);
+
+        assertFalse(result);
+    }
 }

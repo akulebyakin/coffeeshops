@@ -89,9 +89,23 @@ class CoffeeShopServiceTest {
 
         verify(coffeeShopRepository, times(1)).deleteById(1L);
     }
+    @Test
+    void updateCoffeeShop_CoffeeShopDoesNotExist_ThrowsRuntimeException() {
+        CoffeeShop updatedCoffeeShop = new CoffeeShop();
+        updatedCoffeeShop.setName("New Name");
+
+        when(coffeeShopRepository.findById(1L)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            coffeeShopService.updateCoffeeShop(1L, updatedCoffeeShop);
+        });
+
+        assertEquals("Coffee shop not found with id: 1", exception.getMessage());
+        verify(coffeeShopRepository, never()).save(any(CoffeeShop.class));
+    }
 
     @Test
-    void updateCoffeeShop_CoffeeShopExists_UpdatesAndReturnsCoffeeShop() {
+    void updateCoffeeShop_ValidCoffeeShop_UpdatesAndReturnsCoffeeShop() {
         CoffeeShop existingCoffeeShop = new CoffeeShop();
         existingCoffeeShop.setId(1L);
         existingCoffeeShop.setName("Old Name");
@@ -102,22 +116,11 @@ class CoffeeShopServiceTest {
         when(coffeeShopRepository.findById(1L)).thenReturn(Optional.of(existingCoffeeShop));
         when(coffeeShopRepository.save(existingCoffeeShop)).thenReturn(existingCoffeeShop);
 
-        coffeeShopService.updateCoffeeShop(1L, updatedCoffeeShop);
+        CoffeeShop result = coffeeShopService.updateCoffeeShop(1L, updatedCoffeeShop);
 
-        assertEquals("New Name", existingCoffeeShop.getName());
+        assertNotNull(result);
+        assertEquals("New Name", result.getName());
         verify(coffeeShopRepository, times(1)).save(existingCoffeeShop);
-    }
-
-    @Test
-    void updateCoffeeShop_CoffeeShopDoesNotExist_DoesNothing() {
-        CoffeeShop updatedCoffeeShop = new CoffeeShop();
-        updatedCoffeeShop.setName("New Name");
-
-        when(coffeeShopRepository.findById(1L)).thenReturn(Optional.empty());
-
-        coffeeShopService.updateCoffeeShop(1L, updatedCoffeeShop);
-
-        verify(coffeeShopRepository, never()).save(any(CoffeeShop.class));
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.kulebiakin.coffeeshops.controller;
 
 import com.kulebiakin.coffeeshops.entity.User;
 import com.kulebiakin.coffeeshops.service.UserService;
+import com.kulebiakin.coffeeshops.util.validator.PasswordValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,6 +33,7 @@ public class UserController {
     }
 
     // Edit user by id (can be used by both ADMIN and USER)
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/edit/{id}")
     public String editUser(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
@@ -42,13 +44,36 @@ public class UserController {
         return "user-edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/edit")
     public String updateUser(@ModelAttribute("user") @Valid User user,
-                             BindingResult bindingResult) {
+                             BindingResult bindingResult,
+                             Model model) {
+        // Get existing user by id
+        User existingUser = userService.findById(user.getId());
+        if (existingUser == null) {
+            bindingResult.rejectValue("id", "error.user", "Пользователь не найден");
+            return "user-edit";
+        }
+
+        // Check if email or login already exists
+        if (userService.isEmailOrLoginExistsExcludingUser(user.getEmail(), user.getLogin(), user.getId())) {
+            model.addAttribute("userEditingError", "Пользователь с таким email или login уже существует");
+            return "user-edit";
+        }
+
+        // If password is entered check if password contains at least 3 characters
+        if (user.getPassword() != null && !user.getPassword().isEmpty() &&
+                !PasswordValidator.isValid(user.getPassword())) {
+            bindingResult.rejectValue("password", "error.user", "Пароль должен содержать не менее 3 символов");
+            return "user-edit";
+        }
+
         if (bindingResult.hasErrors()) {
             return "user-edit";
         }
-        userService.saveUser(user);
+
+        userService.updateUser(user);
         return "redirect:/users";
     }
 
