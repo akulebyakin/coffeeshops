@@ -33,7 +33,7 @@ a.active {
 nav {
     background-color: #1f1f1f; /* Dark background for navigation */
     padding: 10px 20px;
-    border-bottom: 2px solid #333333;
+    /*border-bottom: 2px solid #333333;*/
 }
 
 nav a {
@@ -139,12 +139,19 @@ select.error {
 
 /* Style for pop-up messages */
 p {
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
+/*div.alert p {*/
+/*    padding: 5px;*/
+/*    border-radius: 5px;*/
+/*    margin-bottom: 5px;*/
+/*}*/
+
 p[style*="color: green;"] {
+    padding: 10px;
     background-color: #003300; /* Dark green background */
     color: #66ff66; /* Light green text */
 }
@@ -272,3 +279,29 @@ input[type="file"] {
 /*    background-color: #d4edda;*/
 /*    border-color: #c3e6cb;*/
 /*}*/
+
+
+/*Footer*/
+.site-footer {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    padding: 10px 0;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.site-footer a {
+    color: #1e90ff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: #ffcc00; /* Golden color on hover */
+    text-decoration: underline;
+}

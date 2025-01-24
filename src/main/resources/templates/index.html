@@ -8,7 +8,7 @@
 <body>
 <header>
     <h1>Добро пожаловать в Coffee Shops</h1>
-    <div th:if="${session.loginSuccess}">
+    <div th:if="${session.loginSuccess}" class="alert alert-success">
         <p style="color: green;">Вы вошли как пользователь <span th:text="${session.username}"></span>!</p>
     </div>
 </header>
@@ -26,5 +26,9 @@
     </div>
 
 </main>
+
+<!--Attach footer-->
+<div th:replace="fragments/footer.html :: footer"></div>
+
 </body>
 </html>
