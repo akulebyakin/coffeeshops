@@ -1,26 +1,26 @@
-/* Основные настройки */
+/* Basic settings */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #1f1f1f; /* Темный фон */
-    color: #ffffff; /* Белый текст */
+    background-color: #1f1f1f; /* Dark background */
+    color: #ffffff; /* White text */
     line-height: 1.6;
-    padding: 20px; /* Отступы от границ страницы */
+    padding: 20px; /* Padding from page borders */
 }
 
-/* Стили для заголовков */
+/* Styles for headers */
 h1, h2, h3 {
-    color: #ffcc00; /* Золотистый цвет для заголовков */
+    color: #ffcc00; /* Golden color for headers */
 }
 
-/* Ссылки */
+/* Links */
 a {
-    color: #1e90ff; /* Голубой цвет для ссылок */
+    color: #1e90ff; /* Blue color for links */
     text-decoration: none;
 }
 
 a:hover {
-    color: #ffcc00; /* Золотистый цвет при наведении */
+    color: #ffcc00; /* Golden color on hover */
     text-decoration: underline;
 }
 
@@ -29,9 +29,9 @@ a.active {
     color: #ffcc00;
 }
 
-/* Навигация */
+/* Navigation */
 nav {
-    background-color: #1f1f1f; /* Темный фон навигации */
+    background-color: #1f1f1f; /* Dark background for navigation */
     padding: 10px 20px;
     border-bottom: 2px solid #333333;
 }
@@ -45,11 +45,11 @@ nav a:hover {
     color: #ffcc00;
 }
 
-/* Кнопки */
+/* Buttons */
 .btn {
     display: inline-block;
-    background-color: #333333; /* Темный фон кнопок */
-    color: #ffffff; /* Белый текст */
+    background-color: #333333; /* Dark background for buttons */
+    color: #ffffff; /* White text */
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -58,8 +58,8 @@ nav a:hover {
 }
 
 .btn:hover {
-    background-color: #ffcc00; /* Золотистый фон при наведении */
-    color: #000000; /* Черный текст */
+    background-color: #ffcc00; /* Golden background on hover */
+    color: #000000; /* Black text */
 }
 
 .btn-group {
@@ -71,27 +71,27 @@ nav a:hover {
     margin-right: 10px;
 }
 
-/* Поля ввода */
+/* Input fields */
 input[type="text"], input[type="password"], input[type="email"] {
     /*width: 100%;*/
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #333333; /* Темные границы */
+    border: 1px solid #333333; /* Dark borders */
     border-radius: 5px;
-    background-color: #2b2b2b; /* Чуть светлее темный фон ввода */
-    color: #ffffff; /* Белый текст */
+    background-color: #2b2b2b; /* Slightly lighter dark background for input */
+    color: #ffffff; /* White text */
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
     font-size: 1em;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
-    border-color: #ffcc00; /* Золотистый цвет при фокусе */
+    border-color: #ffcc00; /* Golden color on focus */
     outline: none;
     box-shadow: 0 0 5px #ffcc00;
-    background-color: #3a3a3a; /* Еще светлее при фокусе */
+    background-color: #3a3a3a; /* Even lighter on focus */
 }
 
-/* Стиль для всплывающих сообщений */
+/* Style for pop-up messages */
 p {
     padding: 10px;
     border-radius: 5px;
@@ -99,19 +99,19 @@ p {
 }
 
 p[style*="color: green;"] {
-    background-color: #003300; /* Темно-зеленый фон */
-    color: #66ff66; /* Светло-зеленый текст */
+    background-color: #003300; /* Dark green background */
+    color: #66ff66; /* Light green text */
 }
 
-/* Контейнеры */
+/* Containers */
 div {
     margin: 10px 0;
     padding: 10px;
-    background-color: #1f1f1f; /* Темный фон контейнеров */
+    background-color: #1f1f1f; /* Dark background for containers */
     border-radius: 5px;
 }
 
-/* Логотип */
+/* Logo */
 .logo {
     display: flex;
     justify-content: center;
@@ -125,37 +125,37 @@ div {
     border-radius: 10px;
 }
 
-/* Футер */
+/* Footer */
 footer {
-    background-color: #1f1f1f; /* Темный фон футера */
-    color: #666666; /* Серый текст */
+    background-color: #1f1f1f; /* Dark background for footer */
+    color: #666666; /* Gray text */
     text-align: center;
     padding: 10px 0;
     border-top: 2px solid #333333;
 }
 
-/* Таблицы (если они есть) */
+/* Tables (if any) */
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    background-color: #1f1f1f; /* Темный фон таблицы */
+    background-color: #1f1f1f; /* Dark background for table */
     color: #ffffff;
 }
 
 table th, table td {
     padding: 10px;
-    border: 1px solid #333333; /* Границы таблицы */
+    border: 1px solid #333333; /* Table borders */
     text-align: left;
 }
 
 table th {
-    background-color: #333333; /* Темный фон заголовков таблицы */
-    color: #ffcc00; /* Золотистый текст */
+    background-color: #333333; /* Dark background for table headers */
+    color: #ffcc00; /* Golden text */
 }
 
 table tr:hover {
-    background-color: #333333; /* Подсветка строки при наведении */
+    background-color: #333333; /* Highlight row on hover */
 }
 
 .error-message {
