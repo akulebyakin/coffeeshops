@@ -5,6 +5,7 @@ import com.kulebiakin.coffeeshops.repository.CoffeeShopRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class CoffeeShopService {
         return coffeeShopRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public CoffeeShop save(CoffeeShop coffeeShop) {
         return coffeeShopRepository.save(coffeeShop);
     }
@@ -38,6 +40,7 @@ public class CoffeeShopService {
         coffeeShopRepository.deleteById(id);
     }
 
+    @Transactional
     public CoffeeShop updateCoffeeShop(Long id, @Valid CoffeeShop coffeeShop) {
         CoffeeShop existingCoffeeShop = coffeeShopRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Coffee shop not found with id: " + id));

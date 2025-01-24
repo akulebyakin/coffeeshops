@@ -20,6 +20,7 @@ public class User {
     private Long id;
 
     @Lob
+    @Basic(fetch = FetchType.EAGER) // Fetch the avatar eagerly
     private byte[] avatar;
 
     @Transient // Not stored in the database
