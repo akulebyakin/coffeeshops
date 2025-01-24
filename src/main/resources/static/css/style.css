@@ -207,3 +207,56 @@ table tr:hover {
 .error-message {
     color: red;
 }
+
+/* Скрываем стандартный input type="file" */
+input[type="file"] {
+    display: none;
+}
+
+/* Стили для кнопки загрузки файла */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #333333; /* Dark background for buttons */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #ffcc00; /* Golden background on hover */
+    color: #000000; /* Black text */
+}
+
+.warning-message {
+    color: #ffc107; /* Желтый цвет для предупреждений */
+    font-size: 12px;
+}
+
+/* Стили для ячейки с аватаром */
+.avatar-cell {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+/* Стили для контейнера изображения */
+.avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: transparent !important;
+}
+
+/* Стили для самого изображения */
+.avatar-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* Круглая форма */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для выделения */
+}
+

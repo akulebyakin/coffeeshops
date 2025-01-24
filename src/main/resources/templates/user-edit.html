@@ -8,27 +8,42 @@
 <body>
 <h1>Редактирование пользователя</h1>
 
-<form th:action="@{/users/edit}" th:object="${user}" method="post">
-    <input type="hidden" th:field="*{id}" />
+<form th:action="@{/users/edit}" th:object="${user}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}"/>
+    <div th:if="${user.avatarBase64 == null}">
+        <label for="avatarFile" class="custom-file-upload">Загрузить аватар</label>
+        <input type="file" id="avatarFile" name="avatarFile" accept="image/*" onchange="validateFileSize(event)"/>
+        <div class="warning-message">Максимальный размер файла: 2 МБ</div>
+        <div id="avatarPreview" th:if="${user.avatarBase64 == null}" style="margin-top: 10px;">
+            <img id="previewImage" src="#" alt="Предварительный просмотр"
+                 style="display: none; width: 150px; height: 150px;"/>
+        </div>
+    </div>
+    <div th:if="${user.avatarBase64 != null}">
+        <img th:src="${user.avatarBase64}" alt="Avatar" style="width: 150px; height: 150px;"/>
+        <br>
+        <a th:href="@{/users/edit/avatar/delete/{id}(id=${user.id})}">Удалить аватар</a>
+    </div>
+
     <div>
         <label for="name">Имя:</label>
-        <input type="text" id="name" th:field="*{name}" />
+        <input type="text" id="name" th:field="*{name}"/>
         <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
     </div>
     <div>
         <label for="email">Email:</label>
-        <input type="text" id="email" th:field="*{email}" />
+        <input type="text" id="email" th:field="*{email}"/>
         <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
     </div>
     <div>
         <label for="login">Логин:</label>
-        <input type="text" id="login" th:field="*{login}" />
+        <input type="text" id="login" th:field="*{login}"/>
         <span class="error-message" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
     </div>
     <!-- Password can be edited if needed -->
     <div>
         <label for="password">Пароль:</label>
-        <input type="password" id="password" th:field="*{password}" />
+        <input type="password" id="password" th:field="*{password}"/>
         <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     </div>
     <div th:if="${session!=null && session.loginSuccess && session.role == 'ROLE_ADMIN'}">
@@ -49,3 +64,37 @@
 <a href="/users">Назад к списку</a>
 </body>
 </html>
+
+<script>
+    function validateFileSize(event) {
+        const fileInput = event.target;
+        const previewImage = document.getElementById('previewImage');
+
+        // Max file size: 2 MB
+        const maxSize = 2 * 1024 * 1024;
+
+        if (fileInput.files && fileInput.files[0]) {
+            const file = fileInput.files[0];
+
+            if (file.size > maxSize) {
+                // Reset selected file
+                previewImage.src = '#';
+                previewImage.style.display = 'none';
+                fileInput.value = ''; // Remove selected file
+                return;
+            }
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // If no file is selected, hide preview
+            previewImage.src = '#';
+            previewImage.style.display = 'none';
+        }
+    }
+</script>

@@ -19,6 +19,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Lob
+    private byte[] avatar;
+
+    @Transient // Not stored in the database
+    private String avatarBase64;
+
     @NotEmptyAndNotBlank(
             emptyMessage = "Имя не может быть пустым",
             blankMessage = "Имя не может содержать только пробелы"

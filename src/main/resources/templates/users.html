@@ -11,6 +11,7 @@
 <table border="1">
     <tr>
         <th>ID</th>
+        <th>Аватар</th>
         <th>Имя</th>
         <th>Email</th>
         <th>Логин</th>
@@ -19,6 +20,14 @@
     </tr>
     <tr th:each="user : ${users}">
         <td th:text="${user.id}">1</td>
+        <td class="avatar-cell">
+            <div class="avatar-wrapper">
+                <img th:if="${user.avatarBase64 != null}"
+                     th:src="${user.avatarBase64}"
+                     alt="Avatar"
+                     class="avatar-image" />
+            </div>
+        </td>
         <td th:text="${user.name}">Имя</td>
         <td th:text="${user.email}">Email</td>
         <td th:text="${user.login}">Логин</td>

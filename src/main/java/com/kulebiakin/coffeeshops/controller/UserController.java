@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -28,6 +30,7 @@ public class UserController {
     @GetMapping
     public String listUsers(Model model) {
         List<User> users = userService.findAll();
+        users.forEach(user -> user.setAvatarBase64(userService.getAvatarBase64(user)));
         model.addAttribute("users", users);
         return "users";
     }
@@ -40,6 +43,7 @@ public class UserController {
         if (user == null) {
             return "redirect:/users";
         }
+        user.setAvatarBase64(userService.getAvatarBase64(user));
         model.addAttribute("user", user);
         return "user-edit";
     }
@@ -48,6 +52,7 @@ public class UserController {
     @PostMapping("/edit")
     public String updateUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult,
+                             @RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile,
                              Model model) {
         // Get existing user by id
         User existingUser = userService.findById(user.getId());
@@ -69,6 +74,15 @@ public class UserController {
             return "user-edit";
         }
 
+        if (avatarFile!= null && !avatarFile.isEmpty()) {
+            try {
+                userService.updateAvatar(user, avatarFile);
+            } catch (IOException e) {
+                model.addAttribute("error", "Ошибка загрузки аватара");
+                return "user-edit";
+            }
+        }
+
         if (bindingResult.hasErrors()) {
             return "user-edit";
         }
@@ -82,6 +96,13 @@ public class UserController {
     public String deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
         return "redirect:/users";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/edit/avatar/delete/{id}")
+    public String deleteAvatar(@PathVariable Long id) {
+        userService.deleteAvatar(id);
+        return "redirect:/users/edit/" + id;
     }
 
 }
