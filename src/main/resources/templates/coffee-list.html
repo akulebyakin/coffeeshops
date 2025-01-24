@@ -33,6 +33,7 @@
         <td th:text="${coffeeShop.rating}"></td>
         <td th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
             <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}">Редактировать</a>
+            <br>
             <a th:href="@{/coffee-shops/delete/{id}(id=${coffeeShop.id})}"
                onclick="return confirm('Вы уверены, что хотите удалить эту кофейню?');">Удалить</a>
         </td>

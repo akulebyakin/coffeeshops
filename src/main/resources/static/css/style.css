@@ -2,9 +2,10 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #121212; /* Темный фон */
+    background-color: #1f1f1f; /* Темный фон */
     color: #ffffff; /* Белый текст */
     line-height: 1.6;
+    padding: 20px; /* Отступы от границ страницы */
 }
 
 /* Стили для заголовков */
@@ -74,6 +75,20 @@ div {
     padding: 10px;
     background-color: #1f1f1f; /* Темный фон контейнеров */
     border-radius: 5px;
+}
+
+/* Логотип */
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.logo img {
+    max-width: 120px;
+    height: auto;
+    border-radius: 10px;
 }
 
 /* Футер */
