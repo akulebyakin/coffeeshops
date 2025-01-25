@@ -21,22 +21,22 @@
         </div>
 
         <div>
-            <label for="name">Имя:</label>
+            <label for="name">Имя:</label><br>
             <input type="text" id="name" th:field="*{name}" />
             <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
         <div>
-            <label for="email">Email:</label>
+            <label for="email">Email:</label><br>
             <input type="text" id="email" th:field="*{email}" />
             <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         </div>
         <div>
-            <label for="login">Логин:</label>
+            <label for="login">Логин:</label><br>
             <input type="text" id="login" th:field="*{login}" />
             <span class="error-message" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
         </div>
         <div>
-            <label for="password">Пароль:</label>
+            <label for="password">Пароль:</label><br>
             <input type="password" id="password" th:field="*{password}" />
             <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         </div>
