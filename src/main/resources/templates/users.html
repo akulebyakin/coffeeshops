@@ -8,6 +8,10 @@
 <body>
 <div class="page-container">
     <header>
+        <div class="locale-switcher">
+            <a href="?lang=en" class="locale-btn">English</a>
+            <a href="?lang=ru" class="locale-btn">Русский</a>
+        </div>
         <h1 th:text="#{user.list.header}">User List</h1>
         <div th:if="${successMessage}" class="alert alert-success">
             <p style="color: green;" th:text="${successMessage}"></p>

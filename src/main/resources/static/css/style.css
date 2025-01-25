@@ -17,7 +17,33 @@ body {
     border-radius: 10px;
     background-color: #1f1f1f; /* Dark background for page */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* ТShadow for page */
+
+    position: relative; /* Create a new stacking context */
 }
+
+.locale-switcher {
+    position: absolute; /* Absolute positioning */
+    top: 10px; /* Distance from the top border */
+    right: 10px; /* Distance from the right border */
+    display: flex;
+    gap: 10px; /* gap between elements */
+}
+
+.locale-btn {
+    padding: 5px 10px;
+    background-color: #333333;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.locale-btn:hover {
+    background-color: #ffcc00;
+    color: #121212;
+}
+
 
 /* Styles for headers */
 h1, h2, h3 {
@@ -26,12 +52,12 @@ h1, h2, h3 {
 
 /* Color for 404 header */
 h1.error-404 {
-    color: #ffcc00; /* Золотистый */
+    color: #ffcc00; /* Golden */
 }
 
 /* Color for 500 header */
 h1.error-500 {
-    color: #ff3333; /* Красный */
+    color: #ff3333; /* Red */
 }
 
 /* Links */

@@ -8,6 +8,10 @@
 <body>
 <div class="page-container">
     <header>
+        <div class="locale-switcher">
+            <a href="?lang=en" class="locale-btn">English</a>
+            <a href="?lang=ru" class="locale-btn">Русский</a>
+        </div>
         <h1 th:text="#{index.welcome}">Welcome to Coffee Shops</h1>
         <div th:if="${session.loginSuccess}" class="alert alert-success">
             <p style="color: green;" th:text="#{index.loginSuccess(${session.username})}">You are logged in as user: <span th:text="${session.username}"></span>!</p>

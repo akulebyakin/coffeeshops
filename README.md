@@ -24,6 +24,7 @@ CoffeeShops is a web-based application that allows users to manage coffee shops 
     - Responsive design with a dark theme.
     - Real-time validation for required fields and avatar uploads with file size checks.
     - Custom error pages for 404 and 500 errors.
+    - Locale switcher for English and Russian languages.
 
 ---
 

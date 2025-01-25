@@ -27,14 +27,14 @@ public class WebConfig implements WebMvcConfigurer {
     public LocaleResolver localeResolver() {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver("LANG");
         localeResolver.setDefaultLocale(Locale.ENGLISH);
-        localeResolver.setCookieMaxAge(Duration.ofHours(1)); // Время жизни cookie
+        localeResolver.setCookieMaxAge(Duration.ofHours(1)); // cookie expiration time
         return localeResolver;
     }
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("lang"); // Параметр для переключения языка
+        interceptor.setParamName("lang"); // Change the language parameter name
         return interceptor;
     }
 
