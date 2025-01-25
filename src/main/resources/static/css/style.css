@@ -13,6 +13,16 @@ h1, h2, h3 {
     color: #ffcc00; /* Golden color for headers */
 }
 
+/* Color for 404 header */
+h1.error-404 {
+    color: #ffcc00; /* Золотистый */
+}
+
+/* Color for 500 header */
+h1.error-500 {
+    color: #ff3333; /* Красный */
+}
+
 /* Links */
 a {
     color: #1e90ff; /* Blue color for links */
@@ -304,4 +314,58 @@ input[type="file"] {
 .site-footer a:hover {
     color: #ffcc00; /* Golden color on hover */
     text-decoration: underline;
+}
+
+/*Error Page*/
+/* Common styles for error pages */
+body.error-page {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+    margin: 0;
+}
+
+.error-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #1f1f1f;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.error-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.error-title {
+    font-size: 36px;
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.error-text {
+    font-size: 18px;
+    color: #aaaaaa;
+    margin-bottom: 20px;
+}
+
+.error-link {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #ffffff;
+    background-color: #ff3333;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.error-link:hover {
+    background-color: #ffcc00;
+    color: #121212;
 }

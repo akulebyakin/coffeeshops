@@ -75,8 +75,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        String[] allowedResources = {"/", "/login", "/register", "/error", "/css/**", "/privacy-policy", "/terms-of-service"};
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/register", "/error", "/css/**").permitAll()
+                        .requestMatchers(allowedResources).permitAll()
                         .requestMatchers("/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

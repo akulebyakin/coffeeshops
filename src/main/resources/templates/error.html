@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ошибка</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="error-page">
+<div class="error-container">
+    <img src="/images/error.webp" alt="Error" class="error-image">
+    <h1 class="error-title"
+        th:text="${status == 404 ? '404 - Страница не найдена' : (status == 500 ? '500 - Внутренняя ошибка сервера' : 'Какая-то ошибка')}"></h1>
+    <p class="error-text" th:text="${message != null ? message : 'Произошла ошибка при обработке вашего запроса.'}">
+        Возможно, вы ошиблись адресом. Код ошибки: <span th:text="${status}"></span></p>
+    <p class="error-text" th:if="${status != null}">Код ошибки: <span th:text="${status}"></span></p>
+    <a href="/" class="error-link">Вернуться на главную</a>
+</div>
+</body>
+</html>
