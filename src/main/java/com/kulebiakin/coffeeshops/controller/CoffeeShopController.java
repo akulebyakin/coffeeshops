@@ -31,8 +31,8 @@ public class CoffeeShopController {
 
     // Show list of coffee shops
     @GetMapping
-    public String listCoffeeShops(@RequestParam(value = "sortBy", required = false) String sortBy,
-                                  @RequestParam(value = "order", required = false) String order,
+    public String listCoffeeShops(@RequestParam(value = "sortBy", defaultValue = "id") String sortBy,
+                                  @RequestParam(value = "order", defaultValue = "asc") String order,
                                   Model model) {
         List<CoffeeShop> coffeeShops;
 

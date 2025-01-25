@@ -81,6 +81,18 @@ nav a:hover {
     margin-right: 10px;
 }
 
+.btn-add {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-add:hover {
+    background-color: #218838;
+}
+
 /* Input fields */
 input, textarea, select {
     padding: 10px;

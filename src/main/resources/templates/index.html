@@ -21,10 +21,6 @@
         <a href="/users" th:if="${session.loginSuccess != null && session.loginSuccess && session.role == 'ROLE_ADMIN'}">Список пользователей</a>
     </nav>
 
-    <div th:if="${session.loginSuccess != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
-        <a href="/coffee-shops/new" class="btn">Добавить новую кофейню</a>
-    </div>
-
 </main>
 
 <!--Attach footer-->
