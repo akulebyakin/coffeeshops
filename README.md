@@ -1,18 +1,165 @@
-# Coffeeshops
+# CoffeeShops Web Application
 
-EHU student Java Spring project
+CoffeeShops is a web-based application that allows users to manage coffee shops and their details. It includes user authentication, role-based access, and the ability to edit user profiles and coffee shop information. Users can also upload and manage profile avatars.
 
-## Project Overview
-
-This project is a web application for managing a list of coffee shops. Users can register, log in, view the list of coffee shops, and log out. Admin users have additional privileges to edit or delete any coffee shop by its ID.
+---
 
 ## Features
 
-- **User Registration**: Users can register by providing their name, email, login, and password.
-- **User Login**: Registered users can log in to the system.
-- **View Coffee Shops**: Users can view a list of coffee shops with their name, address, contact data, and rating.
-- **Admin Privileges**: Admin users can edit or delete any coffee shop by its ID.
-- **Error Handling**: The application displays error messages for various scenarios, such as invalid login credentials or registration errors.
-- **Validation**: Registration fields are validated to ensure data integrity.
-- **Security**: Passwords are stored securely using the BCrypt hashing algorithm.
-- **Database Integration**: The application uses PostgreSQL as the database backend. Connection pooling is implemented.
+- **User Management**:
+    - Registration and authentication.
+    - Role-based access (ADMIN, MANAGER, USER).
+    - Edit user profiles, including avatars.
+
+- **Coffee Shop Management**:
+    - Add, edit, and delete coffee shops.
+    - Display a list of coffee shops with detailed information.
+
+- **Profile Avatars**:
+    - Upload avatars during registration and profile editing.
+    - Display avatars on user lists and profile pages.
+
+- **UI/UX Enhancements**:
+    - Responsive design with a dark theme.
+    - Real-time validation for avatar uploads with file size checks.
+
+---
+
+## Technology Stack
+
+- **Backend**:
+    - Java with Spring Boot
+    - Spring Security for authentication and authorization
+    - Hibernate for ORM
+
+- **Frontend**:
+    - Thymeleaf for server-side rendering
+    - HTML, CSS, JavaScript
+
+- **Database**:
+    - PostgreSQL
+
+- **Build Tool**:
+    - Maven
+
+---
+
+## Installation
+
+1. **Clone the Repository**:
+
+   ```bash
+   git clone https://github.com/akulebyakin/coffeeshops.git
+   cd coffeeshops
+   ```
+
+2. **Set Up the Database**:
+
+    - Create a PostgreSQL database.
+    - Update the `application.properties` file with your database credentials:
+
+      ```properties
+      spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
+      spring.datasource.username=your_username
+      spring.datasource.password=your_password
+      ```
+
+3. **Run the Application**:
+
+   ```bash
+   mvn spring-boot:run
+   ```
+
+4. **Access the Application**:
+
+    - Open your browser and navigate to `http://localhost:8080`.
+
+---
+
+## Tests
+
+This project includes unit and integration tests to ensure functionality.
+
+### Running Tests
+
+1. **Run All Tests**:
+
+   Use Maven to run all tests:
+
+   ```bash
+   mvn test
+   ```
+
+2. **Run Specific Tests**:
+
+   To run a specific test class:
+
+   ```bash
+   mvn -Dtest=ClassName test
+   ```
+
+---
+
+## Usage
+
+### Roles
+
+- **ADMIN**:
+    - Full access to user and coffee shop management: add, edit, delete.
+- **MANAGER**:
+    - Can add new coffee shop
+    - Can edit and delete own coffee shop
+- **USER**:
+    - View coffee shop details.
+
+### Avatar Upload
+
+- Supported formats: PNG, JPEG, WebP.
+- Max file size: 2 MB.
+
+---
+
+## Project Structure
+
+```plaintext
+src
+├── main
+│   ├── java/com/kulebiakin/coffeeshops
+│   │   ├── controller       # Controllers for handling requests
+│   │   ├── entity           # Entities for database tables
+│   │   ├── repository       # JPA repositories
+│   │   ├── service          # Business logic services
+│   │   └── config           # Configuration files (e.g., SecurityConfig)
+│   ├── resources
+│   │   ├── static           # Static resources (CSS, JS)
+│   │   ├── templates        # Thymeleaf templates
+│   │   └── application.properties # App configuration
+│   └── test                 # Unit and integration tests
+```
+
+---
+
+## API Endpoints
+
+### User Endpoints
+- `GET /users` - List all users (ADMIN only).
+- `POST /users/edit` - Edit user profile (ADMIN/USER).
+- `GET /users/edit/avatar/delete/{id}` - Delete avatar (ADMIN/USER).
+
+### Coffee Shop Endpoints
+- `GET /coffee-shops` - List all coffee shops.
+- `POST /coffee-shops/edit` - Edit coffee shop (ADMIN/MANAGER).
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+## Acknowledgments
+
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Thymeleaf](https://www.thymeleaf.org/)
+- [PostgreSQL](https://www.postgresql.org/)
