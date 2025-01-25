@@ -13,6 +13,7 @@
             <p style="color: green;">Вы вошли как пользователь <span th:text="${session.username}"></span>!</p>
         </div>
     </header>
+
     <main>
         <nav>
             <a href="/login" th:if="${session.loginSuccess == null || !session.loginSuccess}">Войти</a>

@@ -9,7 +9,11 @@
 <div class="page-container">
     <header>
         <h1>Вход в систему</h1>
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p style="color: green;" th:text="${successMessage}"></p>
+        </div>
     </header>
+
     <div class="form-container">
         <form th:action="@{/login}" method="post">
             <div class="form-group">

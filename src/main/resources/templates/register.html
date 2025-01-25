@@ -7,7 +7,9 @@
 </head>
 <body>
 <div class="page-container">
-    <h1>Регистрация</h1>
+    <header>
+        <h1>Регистрация</h1>
+    </header>
 
     <form th:action="@{/register}" th:object="${user}" method="post" enctype="multipart/form-data">
         <div>

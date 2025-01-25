@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 
@@ -44,7 +45,8 @@ public class AuthController {
     public String registerUser(@ModelAttribute("user") @Valid User user,
                                BindingResult bindingResult,
                                @RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile,
-                               Model model) {
+                               Model model,
+                               RedirectAttributes redirectAttributes) {
         // Check if email or login already exists
         if (userService.isEmailOrLoginExists(user.getEmail(), user.getLogin())) {
             model.addAttribute("registrationError", "Пользователь с таким email или login уже существует");
@@ -75,6 +77,8 @@ public class AuthController {
         userService.saveUser(user);
 
         // When registration is successful, redirect to the login page
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Пользователь успешно зарегистрирован. LOGIN = " + user.getLogin() + ", ID = " + user.getId());
         return "redirect:/login";
     }
 }

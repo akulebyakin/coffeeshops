@@ -7,14 +7,15 @@
 </head>
 <body>
 <div class="page-container">
-    <h1>Список пользователей</h1>
-
-    <div th:if="${successMessage}" class="alert alert-success">
-        <p style="color: green;" th:text="${successMessage}"></p>
-    </div>
-    <div th:if="${errorMessge}" class="alert error-message">
-        <p th:text="${errorMessage}"></p>
-    </div>
+    <header>
+        <h1>Список пользователей</h1>
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p style="color: green;" th:text="${successMessage}"></p>
+        </div>
+        <div th:if="${errorMessge}" class="alert error-message">
+            <p th:text="${errorMessage}"></p>
+        </div>
+    </header>
 
     <table>
         <tr>

@@ -7,7 +7,10 @@
 </head>
 <body>
 <div class="page-container">
-    <h1 th:text="${#strings.isEmpty(coffeeShop.id) ? 'Добавить кофейню' : 'Редактировать кофейню'}"></h1>
+    <header>
+        <h1 th:text="${#strings.isEmpty(coffeeShop.id) ? 'Добавить кофейню' : 'Редактировать кофейню'}"></h1>
+    </header>
+
     <form th:action="${#strings.isEmpty(coffeeShop.id) ? '/coffee-shops' : '/coffee-shops/edit/' + coffeeShop.id}" method="post">
         <label for="name">Название кофейни:</label><br>
         <input type="text" id="name" name="name" th:value="${coffeeShop.name}" required><br><br>

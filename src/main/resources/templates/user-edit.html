@@ -7,7 +7,9 @@
 </head>
 <body>
 <div class="page-container">
-    <h1>Редактирование пользователя</h1>
+    <header>
+        <h1>Редактирование пользователя</h1>
+    </header>
 
     <form th:action="@{/users/edit}" th:object="${user}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}"/>
