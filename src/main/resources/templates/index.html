@@ -1,32 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Главная страница</title>
+    <title th:text="#{index.title}">Home Page</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="page-container">
     <header>
-        <h1>Добро пожаловать в Coffee Shops</h1>
+        <h1 th:text="#{index.welcome}">Welcome to Coffee Shops</h1>
         <div th:if="${session.loginSuccess}" class="alert alert-success">
-            <p style="color: green;">Вы вошли как пользователь <span th:text="${session.username}"></span>!</p>
+            <p style="color: green;" th:text="#{index.loginSuccess(${session.username})}">You are logged in as user: <span th:text="${session.username}"></span>!</p>
         </div>
     </header>
 
     <main>
         <nav>
-            <a href="/login" th:if="${session.loginSuccess == null || !session.loginSuccess}">Войти</a>
-            <a href="/logout" th:if="${session.loginSuccess != null && session.loginSuccess}">Выйти</a>
-            <a href="/register" th:if="${session.loginSuccess == null || !session.loginSuccess}">Регистрация</a>
-            <a href="/coffee-shops">Список кофеен</a>
-            <a href="/users" th:if="${session.loginSuccess != null && session.loginSuccess && session.role == 'ROLE_ADMIN'}">Список пользователей</a>
+            <a href="/login" th:if="${session.loginSuccess == null || !session.loginSuccess}" th:text="#{nav.login}">Login</a>
+            <a href="/logout" th:if="${session.loginSuccess != null && session.loginSuccess}" th:text="#{nav.logout}">Logout</a>
+            <a href="/register" th:if="${session.loginSuccess == null || !session.loginSuccess}" th:text="#{nav.registration}">Registration</a>
+            <a href="/coffee-shops" th:text="#{nav.coffeeShops}">Coffee Shop List</a>
+            <a href="/users" th:if="${session.loginSuccess != null && session.loginSuccess && session.role == 'ROLE_ADMIN'}" th:text="#{nav.users}">User List</a>
         </nav>
-
     </main>
-<!--Attach footer-->
-<div th:replace="fragments/footer.html :: footer"></div>
 
+    <!--Attach footer-->
+    <div th:replace="fragments/footer.html :: footer"></div>
 </div>
 </body>
 </html>

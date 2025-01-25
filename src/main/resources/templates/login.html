@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Логин</title>
+    <title th:text="#{login.title}">Login</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="page-container">
     <header>
-        <h1>Вход в систему</h1>
+        <h1 th:text="#{login.header}">Login to the system</h1>
         <div th:if="${successMessage}" class="alert alert-success">
             <p style="color: green;" th:text="${successMessage}"></p>
         </div>
@@ -17,20 +17,20 @@
     <div class="form-container">
         <form th:action="@{/login}" method="post">
             <div class="form-group">
-                <label for="login">Логин:</label>
+                <label for="login" th:text="#{login.label.username}">Username:</label>
                 <input type="text" id="login" name="login" class="form-input" />
             </div>
             <div class="form-group">
-                <label for="password">Пароль:</label>
+                <label for="password" th:text="#{login.label.password}">Password:</label>
                 <input type="password" id="password" name="password" class="form-input" />
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn">Войти</button>
+                <button type="submit" class="btn" th:text="#{login.button.submit}">Login</button>
                 <span class="error-message" th:text="${loginError}"></span>
             </div>
         </form>
         <div class="links">
-            <a href="/register">Регистрация</a> | <a href="/">На главную</a>
+            <a href="/register" th:text="#{nav.registration}">Registration</a> | <a href="/" th:text="#{nav.home}">Home</a>
         </div>
     </div>
 

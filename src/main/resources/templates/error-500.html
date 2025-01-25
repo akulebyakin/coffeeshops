@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>500 - Внутренняя ошибка сервера</title>
+    <title th:text="#{error.500}">500 - Internal Server Error</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="error-page">
 <div class="error-container">
-    <img src="/images/error_500.webp" alt="Ошибка 500" class="error-image">
-    <h1 class="error-title">500 - Внутренняя ошибка сервера</h1>
-    <p class="error-text">Что-то пошло не по плану. Пожалуйста, повторите попытку позже.</p>
-    <a href="/" class="error-link">Вернуться на главную</a>
+    <img src="/images/error_500.webp" alt="Error 500 image" class="error-image">
+    <h1 class="error-title" th:text="#{error.500}">500 - Internal Server Error</h1>
+    <p class="error-text" th:text="#{error.500.text}">Something went wrong. Please try again later.</p>
+    <a href="/" class="error-link" th:text="#{error.homeLink}">Return to Home</a>
 </div>
 </body>
 </html>

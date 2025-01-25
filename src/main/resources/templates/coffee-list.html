@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Список кофеен</title>
+    <title th:text="#{coffeeShop.list.title}">Coffee Shop List</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <div class="page-container">
     <header>
-        <h1>Список кофеен</h1>
+        <h1 th:text="#{coffeeShop.list.header}">Coffee Shop List</h1>
         <div th:if="${successMessage}" class="alert alert-success">
             <p style="color: green;" th:text="${successMessage}"></p>
         </div>
-        <div th:if="${errorMessge}" class="alert error-message">
+        <div th:if="${errorMessage}" class="alert error-message">
             <p th:text="${errorMessage}"></p>
         </div>
     </header>
 
     <div>
-        <span>Сортировать по:</span>
+        <span th:text="#{coffeeShop.list.sortBy}">Sort by:</span>
         <a th:href="@{/coffee-shops(sortBy='id', order='asc')}"
            th:classappend="${currentSortBy == 'id' and currentOrder == 'asc'} ? 'active' : ''">ID ▲</a>
         <a th:href="@{/coffee-shops(sortBy='id', order='desc')}"
            th:classappend="${currentSortBy == 'id' and currentOrder == 'desc'} ? 'active' : ''">ID ▼</a> |
 
         <a th:href="@{/coffee-shops(sortBy='name', order='asc')}"
-           th:classappend="${currentSortBy == 'name' and currentOrder == 'asc'} ? 'active' : ''">Имя ▲</a>
+           th:classappend="${currentSortBy == 'name' and currentOrder == 'asc'} ? 'active' : ''" th:text="#{coffeeShop.list.nameAsc}">Name ▲</a>
         <a th:href="@{/coffee-shops(sortBy='name', order='desc')}"
-           th:classappend="${currentSortBy == 'name' and currentOrder == 'desc'} ? 'active' : ''">Имя ▼</a> |
+           th:classappend="${currentSortBy == 'name' and currentOrder == 'desc'} ? 'active' : ''" th:text="#{coffeeShop.list.nameDesc}">Name ▼</a> |
 
         <a th:href="@{/coffee-shops(sortBy='rating', order='asc')}"
-           th:classappend="${currentSortBy == 'rating' and currentOrder == 'asc'} ? 'active' : ''">Рейтинг ▲</a>
+           th:classappend="${currentSortBy == 'rating' and currentOrder == 'asc'} ? 'active' : ''" th:text="#{coffeeShop.list.ratingAsc}">Rating ▲</a>
         <a th:href="@{/coffee-shops(sortBy='rating', order='desc')}"
-           th:classappend="${currentSortBy == 'rating' and currentOrder == 'desc'} ? 'active' : ''">Рейтинг ▼</a>
+           th:classappend="${currentSortBy == 'rating' and currentOrder == 'desc'} ? 'active' : ''" th:text="#{coffeeShop.list.ratingDesc}">Rating ▼</a>
     </div>
 
     <table>
         <tr>
             <th>ID</th>
-            <th>Название</th>
-            <th>Адрес</th>
-            <th>Телефон</th>
-            <th>Email</th>
-            <th>Сайт</th>
-            <th>Описание</th>
-            <th class="rating-column">Рейтинг</th>
-            <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
-                Действия
+            <th th:text="#{coffeeShop.list.name}">Name</th>
+            <th th:text="#{coffeeShop.list.address}">Address</th>
+            <th th:text="#{coffeeShop.list.phone}">Phone</th>
+            <th th:text="#{coffeeShop.list.email}">Email</th>
+            <th th:text="#{coffeeShop.list.website}">Website</th>
+            <th th:text="#{coffeeShop.list.description}">Description</th>
+            <th class="rating-column" th:text="#{coffeeShop.list.rating}">Rating</th>
+            <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}" th:text="#{coffeeShop.list.actions}">
+                Actions
             </th>
         </tr>
         <tr th:each="coffeeShop : ${coffeeShops}">
@@ -67,20 +67,20 @@
                     && session.loginSuccess
                     && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
                 <span th:if="${(session.role == 'ROLE_MANAGER' && coffeeShop.addedBy.login == session.username) || session.role == 'ROLE_ADMIN'}">
-                    <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}">Редактировать</a>
+                    <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}" th:text="#{coffeeShop.list.edit}">Edit</a>
                     <br>
                     <a th:href="@{/coffee-shops/delete/{id}(id=${coffeeShop.id})}"
-                       onclick="return confirm('Вы уверены, что хотите удалить эту кофейню?');">Удалить</a>
+                       onclick="return confirm('Are you sure you want to delete this coffee shop?');" th:text="#{coffeeShop.list.delete}">Delete</a>
                 </span>
             </td>
         </tr>
     </table>
 
     <div th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
-        <a href="/coffee-shops/new" class="btn btn-add"><i class="fa fa-plus"></i> Добавить новую кофейню</a>
+        <a href="/coffee-shops/new" class="btn btn-add"><i class="fa fa-plus"></i> <span th:text="#{coffeeShop.list.addNew}">Add new coffee shop</span></a>
     </div>
     <br>
-    <a href="/">На главную</a>
+    <a href="/" th:text="#{nav.home}">Home</a>
 
     <!--Attach footer-->
     <div th:replace="fragments/footer.html :: footer"></div>

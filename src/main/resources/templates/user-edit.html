@@ -1,56 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование пользователя</title>
+    <title th:text="#{user.edit.title}">Edit User</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="page-container">
     <header>
-        <h1>Редактирование пользователя</h1>
+        <h1 th:text="#{user.edit.header}">Edit User</h1>
     </header>
 
     <form th:action="@{/users/edit}" th:object="${user}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}"/>
         <div th:if="${user.avatarBase64 == null}">
-            <label for="avatarFile" class="custom-file-upload">Загрузить аватар</label>
+            <label for="avatarFile" class="custom-file-upload" th:text="#{user.edit.label.avatar}">Upload Avatar</label>
             <input type="file" id="avatarFile" name="avatarFile" accept="image/*" onchange="validateFileSize(event)"/>
-            <div class="warning-message">Максимальный размер файла: 2 МБ</div>
+            <div class="warning-message" th:text="#{user.edit.warning.fileSize}">Maximum file size: 2 MB</div>
             <div id="avatarPreview" th:if="${user.avatarBase64 == null}" style="margin-top: 10px;">
-                <img id="previewImage" src="#" alt="Предварительный просмотр"
+                <img id="previewImage" src="#" alt="Avatar Preview"
                      style="display: none; width: 150px; height: 150px;"/>
             </div>
         </div>
         <div th:if="${user.avatarBase64 != null}">
             <img th:src="${user.avatarBase64}" alt="Avatar" style="width: 150px; height: 150px;"/>
             <br>
-            <a th:href="@{/users/edit/avatar/delete/{id}(id=${user.id})}">Удалить аватар</a>
+            <a th:href="@{/users/edit/avatar/delete/{id}(id=${user.id})}" th:text="#{user.edit.link.deleteAvatar}">Delete
+                Avatar</a>
         </div>
 
         <div>
-            <label for="name">Имя:</label><br>
+            <label for="name" th:text="#{user.edit.label.name}">Name:</label><br>
             <input type="text" id="name" th:field="*{name}"/>
             <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
         <div>
-            <label for="email">Email:</label><br>
+            <label for="email" th:text="#{user.edit.label.email}">Email:</label><br>
             <input type="text" id="email" th:field="*{email}"/>
             <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         </div>
         <div>
-            <label for="login">Логин:</label><br>
+            <label for="login" th:text="#{user.edit.label.username}">Username:</label><br>
             <input type="text" id="login" th:field="*{login}"/>
             <span class="error-message" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
         </div>
-        <!-- Password can be edited if needed -->
         <div>
-            <label for="password">Пароль:</label><br>
+            <label for="password" th:text="#{user.edit.label.password}">Password:</label><br>
             <input type="password" id="password" th:field="*{password}"/>
             <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         </div>
         <div th:if="${session!=null && session.loginSuccess && session.role == 'ROLE_ADMIN'}">
-            <label for="role">Роль:</label><br>
+            <label for="role" th:text="#{user.edit.label.role}">Role:</label><br>
             <select id="role" th:field="*{role}">
                 <option value="USER">USER</option>
                 <option value="ADMIN">ADMIN</option>
@@ -59,17 +59,17 @@
         </div>
 
         <div class="btn-group">
-            <button type="submit" class="btn">Сохранить</button>
+            <button type="submit" class="btn" th:text="#{user.edit.button.save}">Save</button>
             <span class="error-message" th:text="${userEditingError}"></span>
         </div>
     </form>
 
-    <a href="/users">Назад к списку</a>
+    <a href="/users" th:text="#{user.edit.link.back}">Back to list</a>
 
     <!--Attach footer-->
     <div th:replace="fragments/footer.html :: footer"></div>
 
-    </div>
+</div>
 <script src="/js/avatar-upload.js"></script>
 </body>
 </html>
