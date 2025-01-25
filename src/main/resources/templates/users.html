@@ -6,52 +6,54 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<h1>Список пользователей</h1>
+<div class="page-container">
+    <h1>Список пользователей</h1>
 
-<div th:if="${successMessage}" class="alert alert-success">
-    <p style="color: green;" th:text="${successMessage}"></p>
+    <div th:if="${successMessage}" class="alert alert-success">
+        <p style="color: green;" th:text="${successMessage}"></p>
+    </div>
+    <div th:if="${errorMessge}" class="alert error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Аватар</th>
+            <th>Имя</th>
+            <th>Email</th>
+            <th>Логин</th>
+            <th>Роль</th>
+            <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_ADMIN')}">Действия</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td class="avatar-cell">
+                <div class="avatar-wrapper">
+                    <img th:if="${user.avatarBase64 != null}"
+                         th:src="${user.avatarBase64}"
+                         alt="Avatar"
+                         class="avatar-image" />
+                </div>
+            </td>
+            <td th:text="${user.name}">Имя</td>
+            <td th:text="${user.email}">Email</td>
+            <td th:text="${user.login}">Логин</td>
+            <td th:text="${user.role}">Роль</td>
+            <td th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_ADMIN')}">
+                <a th:href="@{/users/edit/{id}(id=${user.id})}">Редактировать</a>
+                <br>
+                <a th:href="@{/users/delete/{id}(id=${user.id})}"
+                   onclick="return confirm('Вы уверены, что хотите удалить этого пользователя?');">Удалить</a>
+            </td>
+        </tr>
+    </table>
+
+    <a href="/">На главную</a>
+
+    <!--Attach footer-->
+    <div th:replace="fragments/footer.html :: footer"></div>
+
 </div>
-<div th:if="${errorMessge}" class="alert error-message">
-    <p th:text="${errorMessage}"></p>
-</div>
-
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Аватар</th>
-        <th>Имя</th>
-        <th>Email</th>
-        <th>Логин</th>
-        <th>Роль</th>
-        <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_ADMIN')}">Действия</th>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}">1</td>
-        <td class="avatar-cell">
-            <div class="avatar-wrapper">
-                <img th:if="${user.avatarBase64 != null}"
-                     th:src="${user.avatarBase64}"
-                     alt="Avatar"
-                     class="avatar-image" />
-            </div>
-        </td>
-        <td th:text="${user.name}">Имя</td>
-        <td th:text="${user.email}">Email</td>
-        <td th:text="${user.login}">Логин</td>
-        <td th:text="${user.role}">Роль</td>
-        <td th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_ADMIN')}">
-            <a th:href="@{/users/edit/{id}(id=${user.id})}">Редактировать</a>
-            <br>
-            <a th:href="@{/users/delete/{id}(id=${user.id})}"
-               onclick="return confirm('Вы уверены, что хотите удалить этого пользователя?');">Удалить</a>
-        </td>
-    </tr>
-</table>
-
-<a href="/">На главную</a>
-
-<!--Attach footer-->
-<div th:replace="fragments/footer.html :: footer"></div>
-
 </body>
 </html>

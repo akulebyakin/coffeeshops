@@ -7,81 +7,83 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<h1>Список кофеен</h1>
+<div class="page-container">
+    <h1>Список кофеен</h1>
 
-<div th:if="${successMessage}" class="alert alert-success">
-    <p style="color: green;" th:text="${successMessage}"></p>
-</div>
-<div th:if="${errorMessge}" class="alert error-message">
-    <p th:text="${errorMessage}"></p>
-</div>
+    <div th:if="${successMessage}" class="alert alert-success">
+        <p style="color: green;" th:text="${successMessage}"></p>
+    </div>
+    <div th:if="${errorMessge}" class="alert error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
 
-<div>
-    <span>Сортировать по:</span>
-    <a th:href="@{/coffee-shops(sortBy='id', order='asc')}"
-       th:classappend="${currentSortBy == 'id' and currentOrder == 'asc'} ? 'active' : ''">ID ▲</a>
-    <a th:href="@{/coffee-shops(sortBy='id', order='desc')}"
-       th:classappend="${currentSortBy == 'id' and currentOrder == 'desc'} ? 'active' : ''">ID ▼</a> |
+    <div>
+        <span>Сортировать по:</span>
+        <a th:href="@{/coffee-shops(sortBy='id', order='asc')}"
+           th:classappend="${currentSortBy == 'id' and currentOrder == 'asc'} ? 'active' : ''">ID ▲</a>
+        <a th:href="@{/coffee-shops(sortBy='id', order='desc')}"
+           th:classappend="${currentSortBy == 'id' and currentOrder == 'desc'} ? 'active' : ''">ID ▼</a> |
 
-    <a th:href="@{/coffee-shops(sortBy='name', order='asc')}"
-       th:classappend="${currentSortBy == 'name' and currentOrder == 'asc'} ? 'active' : ''">Имя ▲</a>
-    <a th:href="@{/coffee-shops(sortBy='name', order='desc')}"
-       th:classappend="${currentSortBy == 'name' and currentOrder == 'desc'} ? 'active' : ''">Имя ▼</a> |
+        <a th:href="@{/coffee-shops(sortBy='name', order='asc')}"
+           th:classappend="${currentSortBy == 'name' and currentOrder == 'asc'} ? 'active' : ''">Имя ▲</a>
+        <a th:href="@{/coffee-shops(sortBy='name', order='desc')}"
+           th:classappend="${currentSortBy == 'name' and currentOrder == 'desc'} ? 'active' : ''">Имя ▼</a> |
 
-    <a th:href="@{/coffee-shops(sortBy='rating', order='asc')}"
-       th:classappend="${currentSortBy == 'rating' and currentOrder == 'asc'} ? 'active' : ''">Рейтинг ▲</a>
-    <a th:href="@{/coffee-shops(sortBy='rating', order='desc')}"
-       th:classappend="${currentSortBy == 'rating' and currentOrder == 'desc'} ? 'active' : ''">Рейтинг ▼</a>
-</div>
+        <a th:href="@{/coffee-shops(sortBy='rating', order='asc')}"
+           th:classappend="${currentSortBy == 'rating' and currentOrder == 'asc'} ? 'active' : ''">Рейтинг ▲</a>
+        <a th:href="@{/coffee-shops(sortBy='rating', order='desc')}"
+           th:classappend="${currentSortBy == 'rating' and currentOrder == 'desc'} ? 'active' : ''">Рейтинг ▼</a>
+    </div>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Название</th>
-        <th>Адрес</th>
-        <th>Телефон</th>
-        <th>Email</th>
-        <th>Сайт</th>
-        <th>Описание</th>
-        <th class="rating-column">Рейтинг</th>
-        <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
-            Действия
-        </th>
-    </tr>
-    <tr th:each="coffeeShop : ${coffeeShops}">
-        <td th:text="${coffeeShop.id}"></td>
-        <td th:text="${coffeeShop.name}"></td>
-        <td th:text="${coffeeShop.address}"></td>
-        <td th:text="${coffeeShop.phone}"></td>
-        <td th:text="${coffeeShop.email}"></td>
-        <td th:text="${coffeeShop.website}"></td>
-        <td th:text="${coffeeShop.description}"></td>
-        <td>
-            <span th:utext="${@htmlRatingUtils.generateStars(coffeeShop.rating)}"></span>
-            <br>
-            <span th:text="${@htmlRatingUtils.formatRating(coffeeShop.rating)}"></span>
-        </td>
-        <td th:if="${session != null
-                && session.loginSuccess
-                && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
-            <span th:if="${(session.role == 'ROLE_MANAGER' && coffeeShop.addedBy.login == session.username) || session.role == 'ROLE_ADMIN'}">
-                <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}">Редактировать</a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Адрес</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Сайт</th>
+            <th>Описание</th>
+            <th class="rating-column">Рейтинг</th>
+            <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
+                Действия
+            </th>
+        </tr>
+        <tr th:each="coffeeShop : ${coffeeShops}">
+            <td th:text="${coffeeShop.id}"></td>
+            <td th:text="${coffeeShop.name}"></td>
+            <td th:text="${coffeeShop.address}"></td>
+            <td th:text="${coffeeShop.phone}"></td>
+            <td th:text="${coffeeShop.email}"></td>
+            <td th:text="${coffeeShop.website}"></td>
+            <td th:text="${coffeeShop.description}"></td>
+            <td>
+                <span th:utext="${@htmlRatingUtils.generateStars(coffeeShop.rating)}"></span>
                 <br>
-                <a th:href="@{/coffee-shops/delete/{id}(id=${coffeeShop.id})}"
-                   onclick="return confirm('Вы уверены, что хотите удалить эту кофейню?');">Удалить</a>
-            </span>
-        </td>
-    </tr>
-</table>
+                <span th:text="${@htmlRatingUtils.formatRating(coffeeShop.rating)}"></span>
+            </td>
+            <td th:if="${session != null
+                    && session.loginSuccess
+                    && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
+                <span th:if="${(session.role == 'ROLE_MANAGER' && coffeeShop.addedBy.login == session.username) || session.role == 'ROLE_ADMIN'}">
+                    <a th:href="@{/coffee-shops/edit/{id}(id=${coffeeShop.id})}">Редактировать</a>
+                    <br>
+                    <a th:href="@{/coffee-shops/delete/{id}(id=${coffeeShop.id})}"
+                       onclick="return confirm('Вы уверены, что хотите удалить эту кофейню?');">Удалить</a>
+                </span>
+            </td>
+        </tr>
+    </table>
 
-<div th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
-    <a href="/coffee-shops/new" class="btn btn-add"><i class="fa fa-plus"></i> Добавить новую кофейню</a>
+    <div th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
+        <a href="/coffee-shops/new" class="btn btn-add"><i class="fa fa-plus"></i> Добавить новую кофейню</a>
+    </div>
+    <br>
+    <a href="/">На главную</a>
+
+    <!--Attach footer-->
+    <div th:replace="fragments/footer.html :: footer"></div>
+
 </div>
-<br>
-<a href="/">На главную</a>
-
-<!--Attach footer-->
-<div th:replace="fragments/footer.html :: footer"></div>
-
 </body>
 </html>

@@ -6,25 +6,26 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<header>
-    <h1>Добро пожаловать в Coffee Shops</h1>
-    <div th:if="${session.loginSuccess}" class="alert alert-success">
-        <p style="color: green;">Вы вошли как пользователь <span th:text="${session.username}"></span>!</p>
-    </div>
-</header>
-<main>
-    <nav>
-        <a href="/login" th:if="${session.loginSuccess == null || !session.loginSuccess}">Войти</a>
-        <a href="/logout" th:if="${session.loginSuccess != null && session.loginSuccess}">Выйти</a>
-        <a href="/register" th:if="${session.loginSuccess == null || !session.loginSuccess}">Регистрация</a>
-        <a href="/coffee-shops">Список кофеен</a>
-        <a href="/users" th:if="${session.loginSuccess != null && session.loginSuccess && session.role == 'ROLE_ADMIN'}">Список пользователей</a>
-    </nav>
+<div class="page-container">
+    <header>
+        <h1>Добро пожаловать в Coffee Shops</h1>
+        <div th:if="${session.loginSuccess}" class="alert alert-success">
+            <p style="color: green;">Вы вошли как пользователь <span th:text="${session.username}"></span>!</p>
+        </div>
+    </header>
+    <main>
+        <nav>
+            <a href="/login" th:if="${session.loginSuccess == null || !session.loginSuccess}">Войти</a>
+            <a href="/logout" th:if="${session.loginSuccess != null && session.loginSuccess}">Выйти</a>
+            <a href="/register" th:if="${session.loginSuccess == null || !session.loginSuccess}">Регистрация</a>
+            <a href="/coffee-shops">Список кофеен</a>
+            <a href="/users" th:if="${session.loginSuccess != null && session.loginSuccess && session.role == 'ROLE_ADMIN'}">Список пользователей</a>
+        </nav>
 
-</main>
-
+    </main>
 <!--Attach footer-->
 <div th:replace="fragments/footer.html :: footer"></div>
 
+</div>
 </body>
 </html>

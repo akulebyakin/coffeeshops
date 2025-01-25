@@ -6,29 +6,31 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<header>
-    <h1>Вход в систему</h1>
-</header>
-<form th:action="@{/login}" method="post">
-    <div>
-        <label for="login">Логин: </label>
-        <input type="text" id="login" name="login" />
-    </div>
-    <div>
-        <label for="password">Пароль: </label>
-        <input type="password" id="password" name="password" />
-    </div>
-    <div class="btn-group">
-        <button type="submit" class="btn">Войти</button>
-        <span class="error-message" th:text="${loginError}"></span>
-    </div>
-</form>
-<a href="/register">Регистрация</a>
-<br>
-<a href="/">На главную</a>
+<div class="page-container">
+    <header>
+        <h1>Вход в систему</h1>
+    </header>
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label for="login">Логин: </label>
+            <input type="text" id="login" name="login" />
+        </div>
+        <div>
+            <label for="password">Пароль: </label>
+            <input type="password" id="password" name="password" />
+        </div>
+        <div class="btn-group">
+            <button type="submit" class="btn">Войти</button>
+            <span class="error-message" th:text="${loginError}"></span>
+        </div>
+    </form>
+    <a href="/register">Регистрация</a>
+    <br>
+    <a href="/">На главную</a>
 
-<!--Attach footer-->
-<div th:replace="fragments/footer.html :: footer"></div>
+    <!--Attach footer-->
+    <div th:replace="fragments/footer.html :: footer"></div>
 
+</div>
 </body>
 </html>
