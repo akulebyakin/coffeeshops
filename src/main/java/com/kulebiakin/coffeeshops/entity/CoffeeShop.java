@@ -29,8 +29,8 @@ public class CoffeeShop {
     private String description;
     private String image;
 
-    @Min(1)
-    @Max(100)
+    @Min(0)
+    @Max(50)
     private int rating;
 
     // Connection to the user who added the coffeeshop
@@ -38,14 +38,5 @@ public class CoffeeShop {
     @JoinColumn(name = "added_by", nullable = false)
     private User addedBy;
 
-    @Min(1)
-    @Max(100)
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(@Min(1) @Max(100) int rating) {
-        this.rating = rating;
-    }
 }
 

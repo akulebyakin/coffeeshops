@@ -237,12 +237,12 @@ table tr:hover {
     color: red;
 }
 
-/* Скрываем стандартный input type="file" */
+/* Hide standard input type="file" */
 input[type="file"] {
     display: none;
 }
 
-/* Стили для кнопки загрузки файла */
+/* Upload file custom button style */
 .custom-file-upload {
     display: inline-block;
     padding: 10px 20px;
@@ -261,18 +261,18 @@ input[type="file"] {
 }
 
 .warning-message {
-    color: #ffc107; /* Желтый цвет для предупреждений */
+    color: #ffc107; /* Golden color for warnings */
     font-size: 12px;
 }
 
-/* Стили для ячейки с аватаром */
+/* Avatar cell style */
 .avatar-cell {
     text-align: center;
     vertical-align: middle;
     padding: 10px;
 }
 
-/* Стили для контейнера изображения */
+/* Avatar container styles */
 .avatar-wrapper {
     display: flex;
     justify-content: center;
@@ -281,7 +281,7 @@ input[type="file"] {
     background-color: transparent !important;
 }
 
-/* Стили для самого изображения */
+/* Avatar image styles */
 .avatar-image {
     width: 80px;
     height: 80px;
@@ -380,4 +380,22 @@ body.error-page {
 .error-link:hover {
     background-color: #ffcc00;
     color: #121212;
+}
+
+/* Rating */
+table .rating-column {
+    min-width: 100px;
+    text-align: center;
+}
+
+.fa-star,
+.fa-star-half-o {
+    font-size: 10px; /* Размер звёзд */
+    color: #ccc; /* Цвет неактивных звёзд */
+    margin-right: 2px;
+}
+
+.fa-star.checked,
+.fa-star-half-o.checked {
+    color: #ffcc00; /* Цвет активных звёзд */
 }

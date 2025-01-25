@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Список кофеен</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <h1>Список кофеен</h1>
@@ -34,7 +34,7 @@
        th:classappend="${currentSortBy == 'rating' and currentOrder == 'desc'} ? 'active' : ''">Рейтинг ▼</a>
 </div>
 
-<table border="1">
+<table>
     <tr>
         <th>ID</th>
         <th>Название</th>
@@ -43,7 +43,7 @@
         <th>Email</th>
         <th>Сайт</th>
         <th>Описание</th>
-        <th>Рейтинг</th>
+        <th class="rating-column">Рейтинг</th>
         <th th:if="${session != null && session.loginSuccess && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
             Действия
         </th>
@@ -56,7 +56,11 @@
         <td th:text="${coffeeShop.email}"></td>
         <td th:text="${coffeeShop.website}"></td>
         <td th:text="${coffeeShop.description}"></td>
-        <td th:text="${coffeeShop.rating}"></td>
+        <td>
+            <span th:utext="${@htmlRatingUtils.generateStars(coffeeShop.rating)}"></span>
+            <br>
+            <span th:text="${@htmlRatingUtils.formatRating(coffeeShop.rating)}"></span>
+        </td>
         <td th:if="${session != null
                 && session.loginSuccess
                 && (session.role == 'ROLE_MANAGER' || session.role == 'ROLE_ADMIN')}">
