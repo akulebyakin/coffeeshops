@@ -9,7 +9,7 @@
 <div class="page-container">
     <h1>Регистрация</h1>
 
-    <form th:action="@{/register}" th:object="${user}" method="post">
+    <form th:action="@{/register}" th:object="${user}" method="post" enctype="multipart/form-data">
         <div>
             <label for="avatarFile" class="custom-file-upload">Загрузить аватар</label>
             <input type="file" id="avatarFile" name="avatarFile" accept="image/*" onchange="validateFileSize(event)"/>
