@@ -89,8 +89,13 @@ nav a:hover {
     text-decoration: none;
 }
 
+a.btn:hover {
+    text-decoration: none;
+}
+
 .btn-add:hover {
-    background-color: #218838;
+    background-color: #ffcc00;
+    color: #121212;
 }
 
 /* Input fields */
@@ -380,6 +385,7 @@ body.error-page {
 .error-link:hover {
     background-color: #ffcc00;
     color: #121212;
+    text-decoration: none;
 }
 
 /* Rating */

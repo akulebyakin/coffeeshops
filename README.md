@@ -14,6 +14,7 @@ CoffeeShops is a web-based application that allows users to manage coffee shops 
 - **Coffee Shop Management**:
     - Add, edit, and delete coffee shops.
     - Display a list of coffee shops with detailed information.
+    - Coffee shop rating system.
 
 - **Profile Avatars**:
     - Upload avatars during registration and profile editing.
@@ -21,7 +22,8 @@ CoffeeShops is a web-based application that allows users to manage coffee shops 
 
 - **UI/UX Enhancements**:
     - Responsive design with a dark theme.
-    - Real-time validation for avatar uploads with file size checks.
+    - Real-time validation for required fields and avatar uploads with file size checks.
+    - Custom error pages for 404 and 500 errors.
 
 ---
 
@@ -53,7 +55,11 @@ CoffeeShops is a web-based application that allows users to manage coffee shops 
    cd coffeeshops
    ```
 
-2. **Set Up the Database**:
+2. **Create application.properties**:
+
+   - Create a copy of `application-backup.properties` and rename it to `application.properties`
+   
+3. **Set Up the Database**:
 
     - Create a PostgreSQL database.
     - Update the `application.properties` file with your database credentials:
@@ -64,13 +70,13 @@ CoffeeShops is a web-based application that allows users to manage coffee shops 
       spring.datasource.password=your_password
       ```
 
-3. **Run the Application**:
+4. **Run the Application**:
 
    ```bash
    mvn spring-boot:run
    ```
 
-4. **Access the Application**:
+5. **Access the Application**:
 
     - Open your browser and navigate to `http://localhost:8080`.
 
