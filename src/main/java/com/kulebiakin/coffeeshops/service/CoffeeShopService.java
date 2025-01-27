@@ -4,12 +4,14 @@ import com.kulebiakin.coffeeshops.entity.CoffeeShop;
 import com.kulebiakin.coffeeshops.exception.ResourceNotFoundException;
 import com.kulebiakin.coffeeshops.repository.CoffeeShopRepository;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 public class CoffeeShopService {
@@ -34,10 +36,12 @@ public class CoffeeShopService {
     }
 
     public CoffeeShop save(CoffeeShop coffeeShop) {
+        log.debug("Saving coffee shop with name: {}", coffeeShop);
         return coffeeShopRepository.save(coffeeShop);
     }
 
     public void deleteById(Long id) {
+        log.debug("Deleting coffee shop with id: {}", id);
         coffeeShopRepository.deleteById(id);
     }
 
@@ -45,6 +49,7 @@ public class CoffeeShopService {
         CoffeeShop existingCoffeeShop = coffeeShopRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Coffee shop not found with id: " + id));
         mapToExistingCoffeeShop(coffeeShop, existingCoffeeShop);
+        log.debug("Updating coffee shop with id: {}", id);
         return coffeeShopRepository.save(existingCoffeeShop);
     }
 

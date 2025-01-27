@@ -5,6 +5,7 @@ import com.kulebiakin.coffeeshops.entity.User;
 import com.kulebiakin.coffeeshops.service.CoffeeShopService;
 import com.kulebiakin.coffeeshops.service.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/coffee-shops")
+@Slf4j
 public class CoffeeShopController {
 
     private final CoffeeShopService coffeeShopService;
@@ -64,6 +66,7 @@ public class CoffeeShopController {
                                  BindingResult bindingResult,
                                  Authentication authentication,
                                  RedirectAttributes redirectAttributes) {
+        log.info("Adding new coffee shop: {}", coffeeShop);
         if (bindingResult.hasErrors()) {
             return "coffee-form";
         }
@@ -71,6 +74,8 @@ public class CoffeeShopController {
         User currentUser = userService.findByLogin(authentication.getName());
         coffeeShop.setAddedBy(currentUser); // Set current user as the one who added the coffee shop
         CoffeeShop savedCoffeeshop = coffeeShopService.save(coffeeShop);
+
+        log.info("New coffee shop added: {}", savedCoffeeshop);
         redirectAttributes.addFlashAttribute("successMessage",
                 "Кофейня успешно добавлена. ID = " + savedCoffeeshop.getId());
         return "redirect:/coffee-shops";
@@ -94,10 +99,13 @@ public class CoffeeShopController {
                                    @ModelAttribute("coffeeShop") @Valid CoffeeShop coffeeShop,
                                    BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes) {
+        log.info("Updating coffee shop with ID: {}", id);
         if (bindingResult.hasErrors()) {
             return "coffee-form";
         }
         coffeeShopService.updateCoffeeShop(id, coffeeShop);
+
+        log.info("Coffee shop updated: {}", coffeeShop);
         redirectAttributes.addFlashAttribute("successMessage",
                 "Кофейня успешно обновлена. ID = " + id);
         return "redirect:/coffee-shops";
@@ -106,7 +114,9 @@ public class CoffeeShopController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @GetMapping("/delete/{id}")
     public String deleteCoffeeShop(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        log.info("Deleting coffee shop with ID: {}", id);
         coffeeShopService.deleteById(id);
+        log.info("Coffee shop deleted: ID = {}", id);
         redirectAttributes.addFlashAttribute("successMessage",
                 "Кофейня успешно удалена. ID = " + id);
         return "redirect:/coffee-shops";

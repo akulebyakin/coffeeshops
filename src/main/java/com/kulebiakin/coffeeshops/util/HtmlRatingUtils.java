@@ -8,9 +8,9 @@ public class HtmlRatingUtils {
 
     public String generateStars(int rating) {
         StringBuilder stars = new StringBuilder();
-        int fullStars = rating / 10; // Полные звёзды
-        int halfStar = (rating % 10 >= MAX_STARS) ? 1 : 0; // Полузвезда
-        int emptyStars = MAX_STARS - fullStars - halfStar; // Пустые звёзды
+        int fullStars = rating / 10; // Full stars
+        int halfStar = (rating % 10 >= MAX_STARS) ? 1 : 0; // half star
+        int emptyStars = MAX_STARS - fullStars - halfStar; // empty stars
 
         // Add full stars
         stars.append("<span class='fa fa-star checked'></span>".repeat(Math.max(0, fullStars)));
@@ -28,4 +28,3 @@ public class HtmlRatingUtils {
         return String.format("%.1f / %d", roundedRating, MAX_STARS);
     }
 }
-

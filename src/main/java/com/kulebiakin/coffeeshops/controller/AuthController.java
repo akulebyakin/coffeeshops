@@ -4,6 +4,7 @@ import com.kulebiakin.coffeeshops.entity.User;
 import com.kulebiakin.coffeeshops.service.UserService;
 import com.kulebiakin.coffeeshops.util.validation.PasswordValidator;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 
 @Controller
+@Slf4j
 public class AuthController {
 
     private final UserService userService;
@@ -47,14 +49,17 @@ public class AuthController {
                                @RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile,
                                Model model,
                                RedirectAttributes redirectAttributes) {
+        log.info("Registering user with login: {}", user.getLogin());
         // Check if email or login already exists
         if (userService.isEmailOrLoginExists(user.getEmail(), user.getLogin())) {
+            log.debug("User with email or login already exists");
             model.addAttribute("registrationError", "Пользователь с таким email или login уже существует");
             return "register";
         }
 
         // Check if password contains at least 3 characters
         if (!PasswordValidator.isValid(user.getPassword())) {
+            log.debug("Password is not valid");
             bindingResult.rejectValue("password", "error.user", "Пароль должен содержать не менее 3 символов");
             return "register";
         }
@@ -64,6 +69,7 @@ public class AuthController {
                 user.setAvatar(avatarFile.getBytes());
             }
         } catch (IOException e) {
+            log.error("Error loading avatar", e);
             model.addAttribute("registrationError", "Ошибка загрузки аватара");
             return "register";
         }
@@ -76,6 +82,7 @@ public class AuthController {
         user.setRole(User.Role.USER);
         userService.saveUser(user);
 
+        log.info("User registered successfully. Login {}, ID {}", user.getLogin(), user.getId());
         // When registration is successful, redirect to the login page
         redirectAttributes.addFlashAttribute("successMessage",
                 "Пользователь успешно зарегистрирован. LOGIN = " + user.getLogin() + ", ID = " + user.getId());
