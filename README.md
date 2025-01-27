@@ -136,10 +136,12 @@ src
 │   │   ├── entity           # Entities for database tables
 │   │   ├── repository       # JPA repositories
 │   │   ├── service          # Business logic services
-│   │   └── config           # Configuration files (e.g., SecurityConfig)
+│   │   ├── exception        # Custom exceptions and handlers
+│   │   └── config           # Configuration files (e.g., SecurityConfig, WebConfig)
 │   ├── resources
-│   │   ├── static           # Static resources (CSS, JS)
+│   │   ├── static           # Static resources (CSS, images, JS)
 │   │   ├── templates        # Thymeleaf templates
+│   │   ├── i18n             # Localization files
 │   │   └── application.properties # App configuration
 │   └── test                 # Unit and integration tests
 ```

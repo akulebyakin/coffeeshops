@@ -1,6 +1,7 @@
 package com.kulebiakin.coffeeshops.service;
 
 import com.kulebiakin.coffeeshops.entity.CoffeeShop;
+import com.kulebiakin.coffeeshops.exception.ResourceNotFoundException;
 import com.kulebiakin.coffeeshops.repository.CoffeeShopRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class CoffeeShopService {
 
     public CoffeeShop updateCoffeeShop(Long id, @Valid CoffeeShop coffeeShop) {
         CoffeeShop existingCoffeeShop = coffeeShopRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("Coffee shop not found with id: " + id));
+                new ResourceNotFoundException("Coffee shop not found with id: " + id));
         mapToExistingCoffeeShop(coffeeShop, existingCoffeeShop);
         return coffeeShopRepository.save(existingCoffeeShop);
     }
